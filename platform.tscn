@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c0l13mcrbqiam"]
+[gd_scene load_steps=4 format=3 uid="uid://c0l13mcrbqiam"]
 
 [ext_resource type="Texture2D" uid="uid://0kkkwsuod6p3" path="res://icon.svg" id="1_mi635"]
+[ext_resource type="Script" uid="uid://d0qler7hgmupw" path="res://platform.gd" id="1_s8bxr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
 size = Vector2(128, 12)
@@ -8,6 +9,7 @@ size = Vector2(128, 12)
 [node name="Platform" type="StaticBody2D"]
 collision_layer = 2
 collision_mask = 0
+script = ExtResource("1_s8bxr")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

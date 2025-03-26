@@ -1,7 +1,8 @@
+class_name Player
 extends CharacterBody2D
 
-@export var gravity_acceleration: float = 750.0
-@export var jump_impulse: float = 500.0
+@export var gravity_acceleration: float = 1000.0
+@export var jump_impulse: float = 550.0
 @export var horizontal_move_speed: float = 100.0
 
 @export var target_velocity: Vector2 = Vector2.ZERO
