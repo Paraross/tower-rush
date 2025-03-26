@@ -10,11 +10,13 @@ script = ExtResource("1_h2yge")
 [node name="Player" parent="." instance=ExtResource("1_0xm2m")]
 position = Vector2(319, 346)
 
-[node name="Floor" parent="." instance=ExtResource("2_0xm2m")]
+[node name="Platforms" type="Node" parent="."]
+
+[node name="Floor" parent="Platforms" instance=ExtResource("2_0xm2m")]
 position = Vector2(320, 354)
 
-[node name="Floor2" parent="." instance=ExtResource("2_0xm2m")]
+[node name="Floor2" parent="Platforms" instance=ExtResource("2_0xm2m")]
 position = Vector2(281, 222)
 
-[node name="Floor3" parent="." instance=ExtResource("2_0xm2m")]
+[node name="Floor3" parent="Platforms" instance=ExtResource("2_0xm2m")]
 position = Vector2(377, 121)

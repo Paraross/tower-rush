@@ -1,3 +1,4 @@
+class_name Platform
 extends StaticBody2D
 
 # idk if which would be better: Player or the most general type (Node2D)
