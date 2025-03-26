@@ -1,0 +1,70 @@
+[gd_scene load_steps=4 format=3 uid="uid://d0uw1sb6c1v64"]
+
+[ext_resource type="PackedScene" uid="uid://sk8717hno8rx" path="res://player.tscn" id="1_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://0kkkwsuod6p3" path="res://icon.svg" id="2_h2yge"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
+size = Vector2(128, 12)
+
+[node name="Main" type="Node"]
+
+[node name="Player" parent="." instance=ExtResource("1_0xm2m")]
+position = Vector2(319, 346)
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(320, 354)
+collision_layer = 2
+collision_mask = 0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor"]
+modulate = Color(0.43, 0.126707, 0.0344, 1)
+scale = Vector2(1, 0.1)
+texture = ExtResource("2_h2yge")
+
+[node name="Floor2" type="StaticBody2D" parent="."]
+position = Vector2(206, 253)
+rotation = 1.5708
+collision_layer = 2
+collision_mask = 0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2"]
+shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2"]
+modulate = Color(0.43, 0.126707, 0.0344, 1)
+scale = Vector2(1, 0.1)
+texture = ExtResource("2_h2yge")
+
+[node name="Floor3" type="StaticBody2D" parent="."]
+position = Vector2(466, 262)
+rotation = -0.785398
+collision_layer = 2
+collision_mask = 0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor3"]
+shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor3"]
+modulate = Color(0.43, 0.126707, 0.0344, 1)
+scale = Vector2(1, 0.1)
+texture = ExtResource("2_h2yge")
+
+[node name="Floor4" type="StaticBody2D" parent="."]
+position = Vector2(317, 235)
+collision_layer = 2
+collision_mask = 0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor4"]
+shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor4"]
+modulate = Color(0.43, 0.126707, 0.0344, 1)
+scale = Vector2(1, 0.1)
+texture = ExtResource("2_h2yge")
