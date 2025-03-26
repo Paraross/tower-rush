@@ -5,7 +5,7 @@ extends CharacterBody2D
 @export var jump_impulse: float = 550.0
 @export var horizontal_move_speed: float = 100.0
 
-@export var target_velocity: Vector2 = Vector2.ZERO
+var target_velocity: Vector2 = Vector2.ZERO
 
 func _process(delta: float) -> void:
 	var direction := Vector2.ZERO
