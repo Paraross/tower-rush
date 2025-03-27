@@ -1,11 +1,14 @@
 class_name Player
 extends CharacterBody2D
 
+signal reached_height
+
 @export var gravity_acceleration: float = 1000.0
 @export var jump_impulse: float = 550.0
 @export var horizontal_move_speed: float = 100.0
 
 var target_velocity: Vector2 = Vector2.ZERO
+var reached: bool = false
 
 func _process(delta: float) -> void:
 	var direction := Vector2.ZERO
@@ -26,6 +29,10 @@ func _process(delta: float) -> void:
 	target_velocity.x = direction.x * horizontal_move_speed
 	velocity = target_velocity
 	move_and_slide()
+
+	if not reached and position.y < 300.0:
+		reached = true
+		reached_height.emit()
 
 
 func can_jump() -> bool:
