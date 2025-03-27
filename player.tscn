@@ -18,3 +18,7 @@ shape = SubResource("RectangleShape2D_onrkg")
 position = Vector2(0, -16)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_4flbx")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -100)
+zoom = Vector2(0.75, 0.75)

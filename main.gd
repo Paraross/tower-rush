@@ -10,9 +10,9 @@ func _ready() -> void:
 		platform.initialize(player)
 
 
-func _on_player_reached_height() -> void:
+func _on_player_reached_height(count: int) -> void:
 	var new_platform: Platform = platform_scene.instantiate()
 	new_platform.position.x = 250.0
-	new_platform.position.y = 100.0
+	new_platform.position.y = 100.0 - (count - 1) * 150.0
 	new_platform.initialize(player) 
 	platforms.add_child(new_platform)
