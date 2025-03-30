@@ -20,6 +20,8 @@ func _process(delta: float) -> void:
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1.0
 	
+	target_velocity.x = direction.x * horizontal_move_speed
+	
 	if not is_on_floor():
 		target_velocity.y += gravity_acceleration * delta
 	else:
@@ -28,7 +30,12 @@ func _process(delta: float) -> void:
 	if can_jump() and Input.is_action_pressed("jump"):
 		jump()
 	
-	target_velocity.x = direction.x * horizontal_move_speed
+	#var collision := get_last_slide_collision()
+	#if collision != null:
+		#var collider: CollisionObject2D = collision.get_collider()
+		#if collider.collision_layer == 4: # wall
+			#target_velocity.x *= -2.0
+	
 	velocity = target_velocity
 	move_and_slide()
 
