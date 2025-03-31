@@ -15,34 +15,30 @@ var additional_velocity: Vector2 = Vector2.ZERO
 @onready var wall_bounce_timer: Timer = $WallBounceTimer
 
 func _process(delta: float) -> void:
-	var on_floor := is_on_floor()
-	var direction := Vector2.ZERO
+	handle_horizontal_movement()
+	handle_gravity(delta)
+	handle_jumping()
 	
-	if Input.is_action_pressed("move_left"):
-		direction.x -= 1.0
-	if Input.is_action_pressed("move_right"):
-		direction.x += 1.0
-	target_velocity.x = direction.x * horizontal_move_speed
-	
-	if not on_floor:
-		target_velocity.y += gravity_acceleration * delta
-	else:
-		target_velocity.y = 0.0
-	
-	if can_jump() and Input.is_action_pressed("jump"):
-		jump()
-	
-	var collision := get_last_slide_collision()
-	if collision != null:
-		var collider: CollisionObject2D = collision.get_collider()
-		var collider_is_wall := collider.collision_layer == 4
-		if collider_is_wall:
-			handle_wall_collision(collider)
+	handle_collisions()
 	
 	set_self_velocity()
 	move_and_slide()
 	
 	handle_platform_spawning()
+
+
+func handle_horizontal_movement() -> void:
+	var direction := Vector2.ZERO
+	if Input.is_action_pressed("move_left"):
+		direction.x -= 1.0
+	if Input.is_action_pressed("move_right"):
+		direction.x += 1.0
+	target_velocity.x = direction.x * horizontal_move_speed
+
+
+func handle_jumping() -> void:
+	if can_jump() and Input.is_action_pressed("jump"):
+		jump()
 
 
 func can_jump() -> bool:
@@ -53,9 +49,24 @@ func jump() -> void:
 	target_velocity.y = -jump_impulse
 
 
+func handle_gravity(delta: float) -> void:
+	if not is_on_floor():
+		target_velocity.y += gravity_acceleration * delta
+	else:
+		target_velocity.y = 0.0
+
+
+func handle_collisions() -> void:
+	var collision := get_last_slide_collision()
+	if collision != null:
+		var collider: CollisionObject2D = collision.get_collider()
+		var collider_is_wall := collider.collision_layer == 4
+		if collider_is_wall:
+			handle_wall_collision(collider)
+
+
 func handle_wall_collision(_collider: CollisionObject2D) -> void:
 	if not is_on_floor() and target_velocity.x != 0.0:
-		#print("wall hit : %s" % target_velocity)
 		wall_bounce_timer.start()
 		additional_velocity.x = -target_velocity.x
 
