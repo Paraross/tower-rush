@@ -16,7 +16,6 @@ var additional_velocity: Vector2 = Vector2.ZERO
 
 func _process(delta: float) -> void:
 	var on_floor := is_on_floor()
-	
 	var direction := Vector2.ZERO
 	
 	if Input.is_action_pressed("move_left"):
@@ -37,36 +36,41 @@ func _process(delta: float) -> void:
 	if collision != null:
 		var collider: CollisionObject2D = collision.get_collider()
 		var collider_is_wall := collider.collision_layer == 4
-		if collider_is_wall and not on_floor and target_velocity.x != 0.0:
-			#print("wall hit : %s" % target_velocity)
-			wall_bounce_timer.start()
-			additional_velocity.x = -target_velocity.x
+		if collider_is_wall:
+			handle_wall_collision(collider)
 	
-	velocity = target_velocity
-	var ratio := wall_bounce_timer.time_left / wall_bounce_timer.wait_time
-	velocity.x = target_velocity.x * (1.0 - ratio) + additional_velocity.x * ratio
+	set_self_velocity()
 	move_and_slide()
-
-	if position.y < reach_height:
-		reach_height -= 150.0
-		reach_count += 1
-		reached_height.emit(reach_count)
+	
+	handle_platform_spawning()
 
 
 func can_jump() -> bool:
-	#var collision := get_last_slide_collision()
-	#if collision == null:
-		#return false
-	#if collision.get_angle() >= PI / 2.0:
-		#return false
-	#var collider: CollisionObject2D = collision.get_collider()
-	#return collider.collision_layer == 2
-	
 	return is_on_floor()
 
 
 func jump() -> void:
 	target_velocity.y = -jump_impulse
+
+
+func handle_wall_collision(_collider: CollisionObject2D) -> void:
+	if not is_on_floor() and target_velocity.x != 0.0:
+		#print("wall hit : %s" % target_velocity)
+		wall_bounce_timer.start()
+		additional_velocity.x = -target_velocity.x
+
+
+func set_self_velocity() -> void:
+	velocity = target_velocity
+	var ratio := wall_bounce_timer.time_left / wall_bounce_timer.wait_time
+	velocity.x = target_velocity.x * (1.0 - ratio) + additional_velocity.x * ratio
+
+
+func handle_platform_spawning() -> void:
+	if position.y < reach_height:
+		reach_height -= 150.0
+		reach_count += 1
+		reached_height.emit(reach_count)
 
 
 func _on_wall_bounce_timer_timeout() -> void:
