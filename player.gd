@@ -28,12 +28,12 @@ func _process(delta: float) -> void:
 
 
 func handle_horizontal_movement() -> void:
-	var direction := Vector2.ZERO
+	var direction := 0.0
 	if Input.is_action_pressed("move_left"):
-		direction.x -= 1.0
+		direction -= 1.0
 	if Input.is_action_pressed("move_right"):
-		direction.x += 1.0
-	target_velocity.x = direction.x * horizontal_move_speed
+		direction += 1.0
+	target_velocity.x = direction * horizontal_move_speed
 
 
 func handle_jumping() -> void:
