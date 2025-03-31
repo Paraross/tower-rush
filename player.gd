@@ -5,7 +5,7 @@ signal reached_height(count: int)
 
 @export var gravity_acceleration: float = 1000.0
 @export var jump_impulse: float = 550.0
-@export var horizontal_move_speed: float = 100.0
+@export var horizontal_move_speed: float = 200.0
 
 var target_velocity: Vector2 = Vector2.ZERO
 var reach_count: int = 0
