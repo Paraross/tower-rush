@@ -23,8 +23,8 @@ texture = ExtResource("1_4flbx")
 position = Vector2(0, -100)
 zoom = Vector2(0.75, 0.75)
 
-[node name="VelocityOverrideTimer" type="Timer" parent="."]
+[node name="WallBounceTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
 
-[connection signal="timeout" from="VelocityOverrideTimer" to="." method="_on_velocity_override_timer_timeout"]
+[connection signal="timeout" from="WallBounceTimer" to="." method="_on_wall_bounce_timer_timeout"]

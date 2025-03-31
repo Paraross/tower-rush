@@ -9,25 +9,21 @@ signal reached_height(count: int)
 
 var target_velocity: Vector2 = Vector2.ZERO
 var reach_count: int = 0
-var override_horizontal_velocity: bool = false
+var additional_velocity: Vector2 = Vector2.ZERO
 
 @onready var reach_height: float = position.y - 150.0
-@onready var velocity_override_timer: Timer = $VelocityOverrideTimer
+@onready var wall_bounce_timer: Timer = $WallBounceTimer
 
 func _process(delta: float) -> void:
 	var on_floor := is_on_floor()
 	
 	var direction := Vector2.ZERO
 	
-	if on_floor:
-		override_horizontal_velocity = false
-	
 	if Input.is_action_pressed("move_left"):
 		direction.x -= 1.0
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1.0
-	if not override_horizontal_velocity:
-		target_velocity.x = direction.x * horizontal_move_speed
+	target_velocity.x = direction.x * horizontal_move_speed
 	
 	if not on_floor:
 		target_velocity.y += gravity_acceleration * delta
@@ -43,11 +39,12 @@ func _process(delta: float) -> void:
 		var collider_is_wall := collider.collision_layer == 4
 		if collider_is_wall and not on_floor and target_velocity.x != 0.0:
 			#print("wall hit : %s" % target_velocity)
-			override_horizontal_velocity = true
-			velocity_override_timer.start()
-			target_velocity.x *= -1.0
+			wall_bounce_timer.start()
+			additional_velocity.x = -target_velocity.x
 	
 	velocity = target_velocity
+	var ratio := wall_bounce_timer.time_left / wall_bounce_timer.wait_time
+	velocity.x = target_velocity.x * (1.0 - ratio) + additional_velocity.x * ratio
 	move_and_slide()
 
 	if position.y < reach_height:
@@ -69,9 +66,8 @@ func can_jump() -> bool:
 
 
 func jump() -> void:
-	#print("jump")
 	target_velocity.y = -jump_impulse
 
 
-func _on_velocity_override_timer_timeout() -> void:
-	override_horizontal_velocity = false
+func _on_wall_bounce_timer_timeout() -> void:
+	additional_velocity = Vector2.ZERO
