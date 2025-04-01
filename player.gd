@@ -3,13 +3,13 @@ extends CharacterBody2D
 
 signal reached_height(count: int)
 
+@export var horizontal_move_speed: float = 200.0
 @export var gravity_acceleration: float = 1000.0
 @export var jump_impulse: float = 550.0
-@export var horizontal_move_speed: float = 200.0
 
 var target_velocity: Vector2 = Vector2.ZERO
-var reach_count: int = 0
 var additional_velocity: Vector2 = Vector2.ZERO
+var reach_count: int = 0
 
 @onready var reach_height: float = position.y - 150.0
 @onready var wall_bounce_timer: Timer = $WallBounceTimer
@@ -74,7 +74,7 @@ func handle_wall_collision(_collider: CollisionObject2D) -> void:
 func set_self_velocity() -> void:
 	velocity = target_velocity
 	var ratio := wall_bounce_timer.time_left / wall_bounce_timer.wait_time
-	velocity.x = target_velocity.x * (1.0 - ratio) + additional_velocity.x * ratio
+	velocity.x = lerpf(target_velocity.x, additional_velocity.x, ratio)
 
 
 func handle_platform_spawning() -> void:
