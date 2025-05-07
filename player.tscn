@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=3 uid="uid://sk8717hno8rx"]
+[gd_scene load_steps=6 format=3 uid="uid://sk8717hno8rx"]
 
-[ext_resource type="Texture2D" uid="uid://0kkkwsuod6p3" path="res://icon.svg" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://da5lh02yir5lq" path="res://player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://cbs35ys6rk4c6" path="res://assets/frogs/basic_frog.png" id="2_hqtel"]
 [ext_resource type="Texture2D" uid="uid://crujb751keu6f" path="res://assets/frogs/jumping_frog.png" id="3_sweqy"]
@@ -14,7 +13,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("2_hqtel")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -22,7 +21,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("3_sweqy")
 }],
-"loop": true,
+"loop": false,
 "name": &"jump",
 "speed": 5.0
 }]
@@ -38,12 +37,6 @@ shape = SubResource("RectangleShape2D_onrkg")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -15)
 sprite_frames = SubResource("SpriteFrames_2hs0m")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(0, -16)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("1_4flbx")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -100)

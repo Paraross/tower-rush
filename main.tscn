@@ -1,9 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0uw1sb6c1v64"]
+[gd_scene load_steps=9 format=3 uid="uid://d0uw1sb6c1v64"]
 
 [ext_resource type="PackedScene" uid="uid://sk8717hno8rx" path="res://player.tscn" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://dnp4lmqy3urp1" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c0l13mcrbqiam" path="res://platform.tscn" id="2_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://c4p0hhq7cvqbu" path="res://wall.tscn" id="4_1bvp3"]
+[ext_resource type="Shader" uid="uid://cqgu24y42h378" path="res://main.gdshader" id="2_7mycd"]
+[ext_resource type="Texture2D" uid="uid://dgnfkfaky5ccp" path="res://assets/level1/level1.png" id="2_lquwl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_272bh"]
+shader = ExtResource("2_7mycd")
+shader_parameter/texture_size_y = 462.0
+shader_parameter/player_pos_y = 20.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1bvp3"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_lquwl"]
+normal = Vector2(-1, 0)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_h2yge")
@@ -11,21 +23,39 @@ script = ExtResource("1_h2yge")
 [node name="Player" parent="." instance=ExtResource("1_0xm2m")]
 position = Vector2(319, 346)
 
+[node name="Background" type="Sprite2D" parent="Player"]
+show_behind_parent = true
+material = SubResource("ShaderMaterial_272bh")
+texture = ExtResource("2_lquwl")
+offset = Vector2(0, -100)
+
 [node name="Platforms" type="Node" parent="."]
 
 [node name="Floor" parent="Platforms" instance=ExtResource("2_0xm2m")]
 position = Vector2(320, 354)
+scale = Vector2(2.84, 1)
 
 [node name="Floor2" parent="Platforms" instance=ExtResource("2_0xm2m")]
 position = Vector2(281, 222)
 
-[node name="Floor3" parent="Platforms" instance=ExtResource("2_0xm2m")]
-position = Vector2(510, 184)
+[node name="Walls" type="Node" parent="."]
 
-[node name="Wall" parent="." instance=ExtResource("4_1bvp3")]
-position = Vector2(199, 170)
+[node name="LeftWall" type="StaticBody2D" parent="Walls"]
+visible = false
+position = Vector2(139, 0)
+collision_layer = 4
+metadata/_edit_group_ = true
 
-[node name="Wall2" parent="." instance=ExtResource("4_1bvp3")]
-position = Vector2(414, 260)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
+shape = SubResource("WorldBoundaryShape2D_1bvp3")
+
+[node name="RightWall" type="StaticBody2D" parent="Walls"]
+visible = false
+position = Vector2(502, 0)
+collision_layer = 4
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
+shape = SubResource("WorldBoundaryShape2D_lquwl")
 
 [connection signal="reached_height" from="Player" to="." method="_on_player_reached_height"]

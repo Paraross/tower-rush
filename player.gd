@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 signal reached_height(count: int)
 
-@export var horizontal_move_speed: float = 200.0
+@export var horizontal_move_speed: float = 300.0
 @export var gravity_acceleration: float = 1000.0
 @export var jump_impulse: float = 550.0
 
@@ -12,6 +12,7 @@ var additional_velocity: Vector2 = Vector2.ZERO
 var reach_count: int = 0
 
 @onready var reach_height: float = position.y - 150.0
+@onready var hitbox: CollisionShape2D = $CollisionShape2D
 @onready var wall_bounce_timer: Timer = $WallBounceTimer
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -60,14 +61,15 @@ func handle_gravity(delta: float) -> void:
 
 func handle_collisions() -> void:
 	var collision := get_last_slide_collision()
-	if collision != null:
-		var collider: CollisionObject2D = collision.get_collider()
-		var collider_is_wall := collider.collision_layer == 4
-		if collider_is_wall:
-			handle_wall_collision(collider)
+	if collision == null:
+		return
+	var collider: CollisionObject2D = collision.get_collider()
+	var collider_is_wall := collider.collision_layer == 4
+	if collider_is_wall:
+		handle_wall_collision()
 
 
-func handle_wall_collision(_collider: CollisionObject2D) -> void:
+func handle_wall_collision() -> void:
 	if not is_on_floor() and target_velocity.x != 0.0:
 		wall_bounce_timer.start()
 		additional_velocity.x = -target_velocity.x
