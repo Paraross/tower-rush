@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cr0me6quyy7t2"
-path="res://.godot/imported/squinting_frog.png-d92699e4c547afd89fda50019fa5adec.ctex"
+uid="uid://bt4fygirebvq"
+path="res://.godot/imported/squinting_frog.png-fc97c9f25ac8685fb519e44ab6a9c73c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/frogs/squinting_frog.png"
-dest_files=["res://.godot/imported/squinting_frog.png-d92699e4c547afd89fda50019fa5adec.ctex"]
+source_file="res://assets/skin2/squinting_frog.png"
+dest_files=["res://.godot/imported/squinting_frog.png-fc97c9f25ac8685fb519e44ab6a9c73c.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cachipiakqu8q"
-path="res://.godot/imported/short_platform3.png-14f07084388e3b596c239db16afaffb0.ctex"
+path="res://.godot/imported/short_platform3.png-626fb0bf5b89cf24c5546570b4a9b150.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Level3/short_platform3.png"
-dest_files=["res://.godot/imported/short_platform3.png-14f07084388e3b596c239db16afaffb0.ctex"]
+source_file="res://assets/level3/short_platform3.png"
+dest_files=["res://.godot/imported/short_platform3.png-626fb0bf5b89cf24c5546570b4a9b150.ctex"]
 
 [params]
 

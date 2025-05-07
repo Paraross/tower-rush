@@ -13,11 +13,13 @@ var reach_count: int = 0
 
 @onready var reach_height: float = position.y - 150.0
 @onready var wall_bounce_timer: Timer = $WallBounceTimer
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _process(delta: float) -> void:
 	handle_horizontal_movement()
 	handle_gravity(delta)
 	handle_jumping()
+	handle_animations()
 	
 	handle_collisions()
 	
@@ -82,6 +84,13 @@ func handle_platform_spawning() -> void:
 		reach_height -= 150.0
 		reach_count += 1
 		reached_height.emit(reach_count)
+
+
+func handle_animations() -> void:
+	if is_on_floor():
+		sprite.animation = "default"
+	else:
+		sprite.animation = "jump"
 
 
 func _on_wall_bounce_timer_timeout() -> void:

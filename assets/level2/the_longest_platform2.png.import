@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dn3u2b2vg2b8m"
-path="res://.godot/imported/the_longest_platform2.png-e288758c209a3d37a113ad4473b75ec7.ctex"
+path="res://.godot/imported/the_longest_platform2.png-db5345d4b64f23fc4443c121240a4eed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Level2/the_longest_platform2.png"
-dest_files=["res://.godot/imported/the_longest_platform2.png-e288758c209a3d37a113ad4473b75ec7.ctex"]
+source_file="res://assets/level2/the_longest_platform2.png"
+dest_files=["res://.godot/imported/the_longest_platform2.png-db5345d4b64f23fc4443c121240a4eed.ctex"]
 
 [params]
 

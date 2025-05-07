@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cr0me6quyy7t2"
-path="res://.godot/imported/squinting_frog.png-d92699e4c547afd89fda50019fa5adec.ctex"
+uid="uid://c3eiluqsko5tl"
+path="res://.godot/imported/enemy.png-783b4f75d65bbb3a011434af32c30047.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/frogs/squinting_frog.png"
-dest_files=["res://.godot/imported/squinting_frog.png-d92699e4c547afd89fda50019fa5adec.ctex"]
+source_file="res://assets/extras/enemy.png"
+dest_files=["res://.godot/imported/enemy.png-783b4f75d65bbb3a011434af32c30047.ctex"]
 
 [params]
 
