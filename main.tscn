@@ -1,10 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://d0uw1sb6c1v64"]
+[gd_scene load_steps=14 format=3 uid="uid://d0uw1sb6c1v64"]
 
 [ext_resource type="PackedScene" uid="uid://sk8717hno8rx" path="res://player.tscn" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://dnp4lmqy3urp1" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c0l13mcrbqiam" path="res://platform.tscn" id="2_0xm2m"]
 [ext_resource type="Shader" uid="uid://cqgu24y42h378" path="res://background.gdshader" id="2_7mycd"]
 [ext_resource type="Texture2D" uid="uid://dgnfkfaky5ccp" path="res://assets/level1/level1.png" id="2_lquwl"]
+[ext_resource type="Script" uid="uid://b5nxgahwv4q85" path="res://main_menu.gd" id="6_4c57u"]
+[ext_resource type="Texture2D" uid="uid://d17t3gpbwke6a" path="res://assets/ui/home.png" id="6_7mycd"]
+[ext_resource type="Texture2D" uid="uid://c86g6u1e6mtwq" path="res://assets/ui/play_button.png" id="7_272bh"]
+[ext_resource type="Texture2D" uid="uid://dkpv83bt0lvg3" path="res://assets/ui/settings_button.png" id="8_kek77"]
+[ext_resource type="Texture2D" uid="uid://cqoctmvoui3fv" path="res://assets/ui/exit_button.png" id="9_4c57u"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_272bh"]
 shader = ExtResource("2_7mycd")
@@ -53,3 +58,52 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
 shape = SubResource("WorldBoundaryShape2D_lquwl")
+
+[node name="MainMenu" type="CanvasLayer" parent="."]
+script = ExtResource("6_4c57u")
+
+[node name="Background" type="Sprite2D" parent="MainMenu"]
+texture = ExtResource("6_7mycd")
+centered = false
+
+[node name="Buttons" type="Control" parent="MainMenu"]
+layout_mode = 3
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -20.0
+offset_right = -76.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="PlayButton" type="Button" parent="MainMenu/Buttons"]
+layout_mode = 0
+offset_right = 164.0
+offset_bottom = 36.0
+icon = ExtResource("7_272bh")
+icon_alignment = 1
+
+[node name="SettingsButton" type="Button" parent="MainMenu/Buttons"]
+layout_mode = 0
+offset_top = 44.0
+offset_right = 164.0
+offset_bottom = 80.0
+icon = ExtResource("8_kek77")
+icon_alignment = 1
+
+[node name="ExitButton" type="Button" parent="MainMenu/Buttons"]
+layout_mode = 0
+offset_top = 88.0
+offset_right = 164.0
+offset_bottom = 124.0
+icon = ExtResource("9_4c57u")
+icon_alignment = 1
+
+[connection signal="pressed" from="MainMenu/Buttons/PlayButton" to="MainMenu" method="_on_play_button_pressed"]
+[connection signal="pressed" from="MainMenu/Buttons/SettingsButton" to="MainMenu" method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MainMenu/Buttons/ExitButton" to="MainMenu" method="_on_exit_button_pressed"]
