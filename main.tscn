@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d0uw1sb6c1v64"]
+[gd_scene load_steps=11 format=3 uid="uid://d0uw1sb6c1v64"]
 
 [ext_resource type="PackedScene" uid="uid://sk8717hno8rx" path="res://player.tscn" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://dnp4lmqy3urp1" path="res://main.gd" id="1_h2yge"]
@@ -6,6 +6,7 @@
 [ext_resource type="Shader" uid="uid://cqgu24y42h378" path="res://background.gdshader" id="2_7mycd"]
 [ext_resource type="Texture2D" uid="uid://dgnfkfaky5ccp" path="res://assets/level1/level1.png" id="2_lquwl"]
 [ext_resource type="PackedScene" uid="uid://ds31qgkich110" path="res://main_menu.tscn" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://dssyfb3gecehd" path="res://pause_menu.tscn" id="7_272bh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_272bh"]
 shader = ExtResource("2_7mycd")
@@ -55,4 +56,10 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
 shape = SubResource("WorldBoundaryShape2D_lquwl")
 
+[node name="PauseMenu" parent="." instance=ExtResource("7_272bh")]
+visible = false
+
 [node name="MainMenu" parent="." instance=ExtResource("6_7mycd")]
+
+[connection signal="pause_menu_exited" from="PauseMenu" to="." method="_on_pause_menu_exited"]
+[connection signal="main_menu_exited" from="MainMenu" to="." method="_on_main_menu_exited"]

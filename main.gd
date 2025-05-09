@@ -19,6 +19,7 @@ var initial_platform_pos: float
 @onready var platforms: Node = $Platforms
 @onready var left_wall: StaticBody2D = $Walls/LeftWall
 @onready var right_wall: StaticBody2D = $Walls/RightWall
+@onready var pause_menu: PauseMenu = $PauseMenu
 
 func _ready() -> void:
 	reach_height = player.position.y - platform_distance
@@ -38,6 +39,13 @@ func _ready() -> void:
 	# spawn some platforms ahead
 	for i in range(2):
 		spawn_next_platform()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		exit()
+		pause_menu.enter()
+
 
 func _process(_delta: float) -> void:
 	set_camera_background_positions()
@@ -86,3 +94,23 @@ func spawn_next_platform() -> void:
 	platforms.add_child(new_platform)
 	
 	spawned_platform_count += 1
+
+
+func enter() -> void:
+	set_process(true)
+	set_process_unhandled_input(true)
+	player.set_process(true)
+
+
+func exit() -> void:
+	set_process(false)
+	set_process_unhandled_input(false)
+	player.set_process(false)
+
+
+func _on_main_menu_exited() -> void:
+	enter()
+
+
+func _on_pause_menu_exited() -> void:
+	enter()
