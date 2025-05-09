@@ -4,7 +4,7 @@ uniform float texture_size_y = 462.0;
 uniform float player_pos_y = 0.0;
 
 void vertex() {
-	
+
 }
 
 void fragment() {
