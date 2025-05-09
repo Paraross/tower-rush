@@ -6,10 +6,14 @@ const MAX_LEVEL: int = 3
 @onready var background: Sprite2D = $Background
 @onready var camera: Camera2D = $Camera2D
 @onready var platforms: Node = $Platforms
+@onready var left_wall: StaticBody2D = $Walls/LeftWall
+@onready var right_wall: StaticBody2D = $Walls/RightWall
 
 var platform_scene: PackedScene = preload("res://platform.tscn")
 var platform_sprites: Array[Texture2D]
 var current_level: int = 1
+
+var platform_distance: float = 150.0
 
 func _process(_delta: float) -> void:
 	set_camera_background_positions()
@@ -43,9 +47,22 @@ func set_background_shader_parameter() -> void:
 	shader.set_shader_parameter("player_pos_y", player.position.y)
 
 
-func _on_player_reached_height(count: int) -> void:
+func spawn_next_platform(reach_count: int) -> void:
 	var new_platform: Platform = platform_scene.instantiate()
-	new_platform.position.x = player.position.x
-	new_platform.position.y = -250.0 - (count - 1) * 150.0
+	
+	var platform_half_width := new_platform.desired_size.x / 2.0
+	var new_platform_x := randf_range(
+		left_wall.position.x + platform_half_width,
+		right_wall.position.x - platform_half_width,
+	)
+	var new_platform_y := -250.0 - (reach_count - 1) * platform_distance
+	
+	new_platform.position.x = new_platform_x
+	new_platform.position.y = new_platform_y
+	
 	new_platform.initialize(player, platform_sprites[current_level - 1])
 	platforms.add_child(new_platform)
+
+
+func _on_player_reached_height(count: int) -> void:
+	spawn_next_platform(count)
