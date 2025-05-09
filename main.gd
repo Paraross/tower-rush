@@ -2,28 +2,23 @@ extends Node
 
 const MAX_LEVEL: int = 3
 
-@onready var player: Player = $Player
-@onready var background: Sprite2D = $Background
-@onready var camera: Camera2D = $Camera2D
-@onready var platforms: Node = $Platforms
-@onready var left_wall: StaticBody2D = $Walls/LeftWall
-@onready var right_wall: StaticBody2D = $Walls/RightWall
-
-
 var platform_scene: PackedScene = preload("res://platform.tscn")
 var platform_sprites: Array[Texture2D]
+
 var current_level: int = 1
+
 var reach_count: int = 0
 var reach_height: float
 
 var platform_distance: float = 150.0
 var initial_platform_pos: float
 
-func _process(_delta: float) -> void:
-	set_camera_background_positions()
-	set_background_shader_parameter()
-	handle_platform_spawning()
-
+@onready var player: Player = $Player
+@onready var background: Sprite2D = $Background
+@onready var camera: Camera2D = $Camera2D
+@onready var platforms: Node = $Platforms
+@onready var left_wall: StaticBody2D = $Walls/LeftWall
+@onready var right_wall: StaticBody2D = $Walls/RightWall
 
 func _ready() -> void:
 	reach_height = player.position.y - platform_distance
@@ -39,6 +34,12 @@ func _ready() -> void:
 	
 	for platform: Platform in platforms.get_children():
 		platform.initialize(player, platform_sprites[current_level - 1])
+
+
+func _process(_delta: float) -> void:
+	set_camera_background_positions()
+	set_background_shader_parameter()
+	handle_platform_spawning()
 
 
 func load_platform_sprites() -> void:
