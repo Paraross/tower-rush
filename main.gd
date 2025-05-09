@@ -45,7 +45,7 @@ func set_background_shader_parameter() -> void:
 
 func _on_player_reached_height(count: int) -> void:
 	var new_platform: Platform = platform_scene.instantiate()
-	new_platform.position.x = 250.0
-	new_platform.position.y = 100.0 - (count - 1) * 150.0
+	new_platform.position.x = player.position.x
+	new_platform.position.y = -250.0 - (count - 1) * 150.0
 	new_platform.initialize(player, platform_sprites[current_level - 1])
 	platforms.add_child(new_platform)

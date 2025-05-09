@@ -21,34 +21,30 @@ normal = Vector2(-1, 0)
 script = ExtResource("1_h2yge")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -100)
 offset = Vector2(0, -100)
 zoom = Vector2(0.75, 0.75)
 
 [node name="Background" type="Sprite2D" parent="."]
 show_behind_parent = true
 material = SubResource("ShaderMaterial_272bh")
-position = Vector2(319, 346)
 texture = ExtResource("2_lquwl")
 offset = Vector2(0, -100)
 
 [node name="Player" parent="." instance=ExtResource("1_0xm2m")]
-position = Vector2(319, 346)
 
 [node name="Platforms" type="Node" parent="."]
 
 [node name="Floor" parent="Platforms" instance=ExtResource("2_0xm2m")]
-position = Vector2(320, 354)
+position = Vector2(1, 8)
 scale = Vector2(2.84, 1)
 
 [node name="Floor2" parent="Platforms" instance=ExtResource("2_0xm2m")]
-position = Vector2(281, 222)
+position = Vector2(-38, -124)
 
 [node name="Walls" type="Node" parent="."]
 
 [node name="LeftWall" type="StaticBody2D" parent="Walls"]
-visible = false
-position = Vector2(139, 0)
+position = Vector2(-180, -346)
 collision_layer = 4
 metadata/_edit_group_ = true
 
@@ -56,8 +52,7 @@ metadata/_edit_group_ = true
 shape = SubResource("WorldBoundaryShape2D_1bvp3")
 
 [node name="RightWall" type="StaticBody2D" parent="Walls"]
-visible = false
-position = Vector2(502, 0)
+position = Vector2(183, -346)
 collision_layer = 4
 metadata/_edit_group_ = true
 
