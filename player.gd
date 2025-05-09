@@ -1,17 +1,13 @@
 class_name Player
 extends CharacterBody2D
 
-signal reached_height(count: int)
-
 @export var horizontal_move_speed: float = 300.0
 @export var gravity_acceleration: float = 1000.0
 @export var jump_impulse: float = 550.0
 
 var target_velocity: Vector2 = Vector2.ZERO
 var additional_velocity: Vector2 = Vector2.ZERO
-var reach_count: int = 0
 
-@onready var reach_height: float = position.y - 150.0
 @onready var hitbox: CollisionShape2D = $CollisionShape2D
 @onready var wall_bounce_timer: Timer = $WallBounceTimer
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -26,8 +22,6 @@ func _process(delta: float) -> void:
 	
 	set_self_velocity()
 	move_and_slide()
-	
-	handle_platform_spawning()
 
 
 func handle_horizontal_movement() -> void:
@@ -79,13 +73,6 @@ func set_self_velocity() -> void:
 	velocity = target_velocity
 	var ratio := wall_bounce_timer.time_left / wall_bounce_timer.wait_time
 	velocity.x = lerpf(target_velocity.x, additional_velocity.x, ratio)
-
-
-func handle_platform_spawning() -> void:
-	if position.y < reach_height:
-		reach_height -= 150.0
-		reach_count += 1
-		reached_height.emit(reach_count)
 
 
 func handle_animations() -> void:

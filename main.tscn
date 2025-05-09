@@ -36,9 +36,6 @@ offset = Vector2(0, -100)
 position = Vector2(1, 8)
 scale = Vector2(2.84, 1)
 
-[node name="Floor2" parent="Platforms" instance=ExtResource("2_0xm2m")]
-position = Vector2(-38, -124)
-
 [node name="Walls" type="Node" parent="."]
 
 [node name="LeftWall" type="StaticBody2D" parent="Walls"]
@@ -56,5 +53,3 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
 shape = SubResource("WorldBoundaryShape2D_lquwl")
-
-[connection signal="reached_height" from="Player" to="." method="_on_player_reached_height"]
