@@ -1,10 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://dssyfb3gecehd"]
+[gd_scene load_steps=8 format=3 uid="uid://dssyfb3gecehd"]
 
 [ext_resource type="Script" uid="uid://62hrqgkiy6l0" path="res://pause_menu.gd" id="2_nwcfo"]
 [ext_resource type="Texture2D" uid="uid://d17t3gpbwke6a" path="res://assets/ui/home.png" id="3_05uyy"]
 [ext_resource type="Texture2D" uid="uid://c86g6u1e6mtwq" path="res://assets/ui/play_button.png" id="3_d3xb4"]
 [ext_resource type="Texture2D" uid="uid://dkpv83bt0lvg3" path="res://assets/ui/settings_button.png" id="4_mxa3g"]
 [ext_resource type="Texture2D" uid="uid://cqoctmvoui3fv" path="res://assets/ui/exit_button.png" id="5_e8sti"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_2nc7s"]
+action = &"ui_cancel"
+
+[sub_resource type="Shortcut" id="Shortcut_d3xb4"]
+events = [SubResource("InputEventAction_2nc7s")]
 
 [node name="PauseMenu" type="CanvasLayer"]
 script = ExtResource("2_nwcfo")
@@ -33,6 +39,7 @@ metadata/_edit_group_ = true
 layout_mode = 0
 offset_right = 164.0
 offset_bottom = 36.0
+shortcut = SubResource("Shortcut_d3xb4")
 icon = ExtResource("3_d3xb4")
 icon_alignment = 1
 

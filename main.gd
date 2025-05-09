@@ -108,9 +108,9 @@ func exit() -> void:
 	player.set_process(false)
 
 
-func _on_main_menu_exited() -> void:
+func _on_main_menu_exited_to_game() -> void:
 	enter()
 
 
-func _on_pause_menu_exited() -> void:
+func _on_pause_menu_exited_to_game() -> void:
 	enter()

@@ -61,5 +61,6 @@ visible = false
 
 [node name="MainMenu" parent="." instance=ExtResource("6_7mycd")]
 
-[connection signal="pause_menu_exited" from="PauseMenu" to="." method="_on_pause_menu_exited"]
-[connection signal="main_menu_exited" from="MainMenu" to="." method="_on_main_menu_exited"]
+[connection signal="exited_to_game" from="PauseMenu" to="." method="_on_pause_menu_exited_to_game"]
+[connection signal="exited_to_main_menu" from="PauseMenu" to="MainMenu" method="_on_pause_menu_exited_to_main_menu"]
+[connection signal="exited_to_game" from="MainMenu" to="." method="_on_main_menu_exited_to_game"]
