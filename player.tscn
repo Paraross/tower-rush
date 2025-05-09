@@ -38,10 +38,6 @@ shape = SubResource("RectangleShape2D_onrkg")
 position = Vector2(-1, -15)
 sprite_frames = SubResource("SpriteFrames_2hs0m")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -100)
-zoom = Vector2(0.75, 0.75)
-
 [node name="WallBounceTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true

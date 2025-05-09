@@ -15,6 +15,7 @@ var reach_count: int = 0
 @onready var hitbox: CollisionShape2D = $CollisionShape2D
 @onready var wall_bounce_timer: Timer = $WallBounceTimer
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+#@onready var camera: Camera2D = $Camera2D
 
 func _process(delta: float) -> void:
 	handle_horizontal_movement()
@@ -28,6 +29,7 @@ func _process(delta: float) -> void:
 	move_and_slide()
 	
 	handle_platform_spawning()
+	#camera.offset.x = 319.0 - position.x
 
 
 func handle_horizontal_movement() -> void:

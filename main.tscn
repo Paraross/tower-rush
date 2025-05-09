@@ -20,14 +20,20 @@ normal = Vector2(-1, 0)
 [node name="Main" type="Node"]
 script = ExtResource("1_h2yge")
 
-[node name="Player" parent="." instance=ExtResource("1_0xm2m")]
-position = Vector2(319, 346)
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -100)
+offset = Vector2(0, -100)
+zoom = Vector2(0.75, 0.75)
 
-[node name="Background" type="Sprite2D" parent="Player"]
+[node name="Background" type="Sprite2D" parent="."]
 show_behind_parent = true
 material = SubResource("ShaderMaterial_272bh")
+position = Vector2(319, 346)
 texture = ExtResource("2_lquwl")
 offset = Vector2(0, -100)
+
+[node name="Player" parent="." instance=ExtResource("1_0xm2m")]
+position = Vector2(319, 346)
 
 [node name="Platforms" type="Node" parent="."]
 
