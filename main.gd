@@ -7,7 +7,7 @@ var platform_sprites: Array[Texture2D]
 
 var current_level: int = 1
 
-var reach_count: int = 0
+var spawned_platform_count: int = 0
 var reach_height: float
 
 var platform_distance: float = 150.0
@@ -34,7 +34,10 @@ func _ready() -> void:
 	
 	for platform: Platform in platforms.get_children():
 		platform.initialize(player, platform_sprites[current_level - 1])
-
+	
+	# spawn some platforms ahead
+	for i in range(2):
+		spawn_next_platform()
 
 func _process(_delta: float) -> void:
 	set_camera_background_positions()
@@ -65,7 +68,6 @@ func handle_platform_spawning() -> void:
 	
 	spawn_next_platform()
 	reach_height -= platform_distance
-	reach_count += 1
 
 
 func spawn_next_platform() -> void:
@@ -76,9 +78,11 @@ func spawn_next_platform() -> void:
 		left_wall.position.x + platform_half_width,
 		right_wall.position.x - platform_half_width,
 	)
-	var new_platform_y := initial_platform_pos - reach_count * platform_distance
+	var new_platform_y := initial_platform_pos - spawned_platform_count * platform_distance
 	
 	new_platform.position = Vector2(new_platform_x, new_platform_y)
 	
 	new_platform.initialize(player, platform_sprites[current_level - 1])
 	platforms.add_child(new_platform)
+	
+	spawned_platform_count += 1
