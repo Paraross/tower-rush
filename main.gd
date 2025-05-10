@@ -14,12 +14,15 @@ var platform_distance: float = 150.0
 var initial_platform_pos: float
 
 @onready var player: Player = $Player
-@onready var background: Sprite2D = $Background
 @onready var camera: Camera2D = $Camera2D
 @onready var platforms: Node = $Platforms
 @onready var left_wall: StaticBody2D = $Walls/LeftWall
 @onready var right_wall: StaticBody2D = $Walls/RightWall
 @onready var pause_menu: PauseMenu = $PauseMenu
+
+@onready var background: Sprite2D = $Background/Background
+@onready var sides: Sprite2D = $Background/Sides
+@onready var details: Sprite2D = $Background/Details
 
 func _ready() -> void:
 	reach_height = player.position.y - platform_distance
@@ -62,12 +65,17 @@ func load_platform_sprites() -> void:
 
 func set_camera_background_positions() -> void:
 	camera.position.y = player.position.y
-	background.position.y = player.position.y
+	for background_element: Sprite2D in $Background.get_children():
+		background_element.position.y = player.position.y
 
 
 func set_background_shader_parameter() -> void:
-	var shader: ShaderMaterial = background.material
-	shader.set_shader_parameter("player_pos_y", player.position.y)
+	var background_shader: ShaderMaterial = background.material
+	var sides_shader: ShaderMaterial = sides.material
+	var details_shader: ShaderMaterial = details.material
+	background_shader.set_shader_parameter("player_pos_y", player.position.y)
+	sides_shader.set_shader_parameter("player_pos_y", player.position.y)
+	details_shader.set_shader_parameter("player_pos_y", player.position.y)
 
 
 func handle_platform_spawning() -> void:
