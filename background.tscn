@@ -37,5 +37,6 @@ material = SubResource("ShaderMaterial_5vw27")
 texture = ExtResource("3_bpugw")
 
 [node name="Details" type="Sprite2D" parent="."]
+z_index = 1
 material = SubResource("ShaderMaterial_kek77")
 texture = ExtResource("4_gjjrj")
