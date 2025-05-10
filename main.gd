@@ -91,6 +91,13 @@ func spawn_next_platform() -> void:
 	platforms.add_child(new_platform)
 	
 	spawned_platform_count += 1
+	# TODO: do this properly
+	if spawned_platform_count == 6:
+		current_level += 1
+		background.set_sprites(current_level)
+	elif spawned_platform_count == 12:
+		current_level += 1
+		background.set_sprites(current_level)
 
 
 func enter() -> void:

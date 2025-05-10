@@ -7,6 +7,7 @@ signal exited_to_game
 func _ready() -> void:
 	enter()
 
+
 func _on_play_button_pressed() -> void:
 	exit_to_game()
 
