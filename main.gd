@@ -19,10 +19,7 @@ var initial_platform_pos: float
 @onready var left_wall: StaticBody2D = $Walls/LeftWall
 @onready var right_wall: StaticBody2D = $Walls/RightWall
 @onready var pause_menu: PauseMenu = $PauseMenu
-
-@onready var background: Sprite2D = $Background/Background
-@onready var sides: Sprite2D = $Background/Sides
-@onready var details: Sprite2D = $Background/Details
+@onready var background: Background = $Background
 
 func _ready() -> void:
 	reach_height = player.position.y - platform_distance
@@ -52,7 +49,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(_delta: float) -> void:
 	set_camera_background_positions()
-	set_background_shader_parameter()
+	background.set_player_position_in_shader(player.position.y)
 	handle_platform_spawning()
 
 
@@ -67,15 +64,6 @@ func set_camera_background_positions() -> void:
 	camera.position.y = player.position.y
 	for background_element: Sprite2D in $Background.get_children():
 		background_element.position.y = player.position.y
-
-
-func set_background_shader_parameter() -> void:
-	var background_shader: ShaderMaterial = background.material
-	var sides_shader: ShaderMaterial = sides.material
-	var details_shader: ShaderMaterial = details.material
-	background_shader.set_shader_parameter("player_pos_y", player.position.y)
-	sides_shader.set_shader_parameter("player_pos_y", player.position.y)
-	details_shader.set_shader_parameter("player_pos_y", player.position.y)
 
 
 func handle_platform_spawning() -> void:

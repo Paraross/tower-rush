@@ -1,0 +1,41 @@
+[gd_scene load_steps=9 format=3 uid="uid://3e1x3vxmnc8h"]
+
+[ext_resource type="Script" uid="uid://bj47yvykxwtuo" path="res://background.gd" id="1_eq6nc"]
+[ext_resource type="Shader" uid="uid://cqgu24y42h378" path="res://background.gdshader" id="1_splo0"]
+[ext_resource type="Texture2D" uid="uid://oydpentjjb13" path="res://assets/level1/background.png" id="2_eq6nc"]
+[ext_resource type="Texture2D" uid="uid://dsbv3qvb3w1jd" path="res://assets/level1/sides.png" id="3_bpugw"]
+[ext_resource type="Texture2D" uid="uid://cyit65uokwvmv" path="res://assets/level1/details.png" id="4_gjjrj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_272bh"]
+shader = ExtResource("1_splo0")
+shader_parameter/texture_size_y = 462.0
+shader_parameter/player_pos_y = 0.0
+shader_parameter/parallax_factor = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5vw27"]
+shader = ExtResource("1_splo0")
+shader_parameter/texture_size_y = 462.0
+shader_parameter/player_pos_y = 0.0
+shader_parameter/parallax_factor = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kek77"]
+shader = ExtResource("1_splo0")
+shader_parameter/texture_size_y = 462.0
+shader_parameter/player_pos_y = 0.0
+shader_parameter/parallax_factor = 1.5
+
+[node name="Background" type="Node2D"]
+script = ExtResource("1_eq6nc")
+metadata/_edit_group_ = true
+
+[node name="Background" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_272bh")
+texture = ExtResource("2_eq6nc")
+
+[node name="Sides" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_5vw27")
+texture = ExtResource("3_bpugw")
+
+[node name="Details" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_kek77")
+texture = ExtResource("4_gjjrj")

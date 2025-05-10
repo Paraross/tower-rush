@@ -1,32 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://d0uw1sb6c1v64"]
+[gd_scene load_steps=9 format=3 uid="uid://d0uw1sb6c1v64"]
 
 [ext_resource type="PackedScene" uid="uid://sk8717hno8rx" path="res://player.tscn" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://dnp4lmqy3urp1" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c0l13mcrbqiam" path="res://platform.tscn" id="2_0xm2m"]
-[ext_resource type="Shader" uid="uid://cqgu24y42h378" path="res://background.gdshader" id="2_7mycd"]
-[ext_resource type="Texture2D" uid="uid://oydpentjjb13" path="res://assets/level1/background.png" id="3_kek77"]
-[ext_resource type="Texture2D" uid="uid://dsbv3qvb3w1jd" path="res://assets/level1/sides.png" id="4_kek77"]
-[ext_resource type="Texture2D" uid="uid://cyit65uokwvmv" path="res://assets/level1/details.png" id="5_4c57u"]
+[ext_resource type="PackedScene" uid="uid://3e1x3vxmnc8h" path="res://background.tscn" id="2_7mycd"]
 [ext_resource type="PackedScene" uid="uid://ds31qgkich110" path="res://main_menu.tscn" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://dssyfb3gecehd" path="res://pause_menu.tscn" id="7_272bh"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_272bh"]
-shader = ExtResource("2_7mycd")
-shader_parameter/texture_size_y = 462.0
-shader_parameter/player_pos_y = 0.0
-shader_parameter/parallax_factor = 0.5
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5vw27"]
-shader = ExtResource("2_7mycd")
-shader_parameter/texture_size_y = 462.0
-shader_parameter/player_pos_y = 0.0
-shader_parameter/parallax_factor = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kek77"]
-shader = ExtResource("2_7mycd")
-shader_parameter/texture_size_y = 462.0
-shader_parameter/player_pos_y = 0.0
-shader_parameter/parallax_factor = 1.5
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1bvp3"]
 normal = Vector2(1, 0)
@@ -40,20 +19,8 @@ script = ExtResource("1_h2yge")
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -100)
 
-[node name="Background" type="Node2D" parent="."]
+[node name="Background" parent="." instance=ExtResource("2_7mycd")]
 position = Vector2(0, -100)
-
-[node name="Background" type="Sprite2D" parent="Background"]
-material = SubResource("ShaderMaterial_272bh")
-texture = ExtResource("3_kek77")
-
-[node name="Sides" type="Sprite2D" parent="Background"]
-material = SubResource("ShaderMaterial_5vw27")
-texture = ExtResource("4_kek77")
-
-[node name="Details" type="Sprite2D" parent="Background"]
-material = SubResource("ShaderMaterial_kek77")
-texture = ExtResource("5_4c57u")
 
 [node name="Player" parent="." instance=ExtResource("1_0xm2m")]
 
