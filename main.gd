@@ -40,6 +40,7 @@ func _ready() -> void:
 	for i in range(2):
 		spawn_next_platform()
 
+	exit()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
