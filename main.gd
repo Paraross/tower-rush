@@ -77,6 +77,7 @@ func handle_platform_spawning() -> void:
 
 func spawn_next_platform() -> void:
 	var new_platform: Platform = platform_scene.instantiate()
+	new_platform.initialize(player, platform_sprites[current_level - 1])
 	
 	var platform_half_width := new_platform.desired_size.x / 2.0
 	var new_platform_x := randf_range(
@@ -87,7 +88,6 @@ func spawn_next_platform() -> void:
 	
 	new_platform.position = Vector2(new_platform_x, new_platform_y)
 	
-	new_platform.initialize(player, platform_sprites[current_level - 1])
 	platforms.add_child(new_platform)
 	
 	spawned_platform_count += 1

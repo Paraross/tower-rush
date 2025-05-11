@@ -1,11 +1,12 @@
 class_name Platform
 extends StaticBody2D
 
-var desired_size: Vector2 = Vector2(128.0, 12.0)
+const DEFAULT_SIZE: Vector2 = Vector2(128.0, 12.0)
 
 # idk if which would be better: Player or the most general type (Node2D)
 var player: Node2D
 var sprite_texture: Texture2D
+var desired_size: Vector2
 
 @onready var sprite: Sprite2D = $Sprite2D
 
@@ -26,5 +27,7 @@ func _process(_delta: float) -> void:
 
 
 func initialize(player_node: Player, texture: Texture2D) -> void:
+	var rand_range := randf_range(-64.0, 64.0)
+	desired_size = DEFAULT_SIZE + Vector2(rand_range, 0.0)
 	player = player_node as Node2D
 	sprite_texture = texture
