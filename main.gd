@@ -14,6 +14,8 @@ var reach_height: float
 var platform_distance: float = 150.0
 var initial_platform_pos: float
 
+var score: int = 0
+
 @onready var player: Player = $Player
 @onready var camera: Camera2D = $Camera2D
 @onready var platforms: Node = $Platforms
@@ -21,6 +23,8 @@ var initial_platform_pos: float
 @onready var right_wall: StaticBody2D = $Walls/RightWall
 @onready var pause_menu: PauseMenu = $PauseMenu
 @onready var background: Background = $Background
+
+# TODO: fix jittering. smooth camera on youtube?
 
 func _ready() -> void:
 	reach_height = player.position.y - platform_distance
