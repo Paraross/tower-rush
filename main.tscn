@@ -1,17 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://d0uw1sb6c1v64"]
+[gd_scene load_steps=9 format=3 uid="uid://d0uw1sb6c1v64"]
 
 [ext_resource type="PackedScene" uid="uid://sk8717hno8rx" path="res://player.tscn" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://dnp4lmqy3urp1" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c0l13mcrbqiam" path="res://platform.tscn" id="2_0xm2m"]
-[ext_resource type="Shader" uid="uid://cqgu24y42h378" path="res://background.gdshader" id="2_7mycd"]
-[ext_resource type="Texture2D" uid="uid://dgnfkfaky5ccp" path="res://assets/level1/level1.png" id="2_lquwl"]
+[ext_resource type="PackedScene" uid="uid://3e1x3vxmnc8h" path="res://background.tscn" id="2_7mycd"]
 [ext_resource type="PackedScene" uid="uid://ds31qgkich110" path="res://main_menu.tscn" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://dssyfb3gecehd" path="res://pause_menu.tscn" id="7_272bh"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_272bh"]
-shader = ExtResource("2_7mycd")
-shader_parameter/texture_size_y = 462.0
-shader_parameter/player_pos_y = 20.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1bvp3"]
 normal = Vector2(1, 0)
@@ -25,10 +19,8 @@ script = ExtResource("1_h2yge")
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -100)
 
-[node name="Background" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_272bh")
-texture = ExtResource("2_lquwl")
-offset = Vector2(0, -100)
+[node name="Background" parent="." instance=ExtResource("2_7mycd")]
+position = Vector2(0, -100)
 
 [node name="Player" parent="." instance=ExtResource("1_0xm2m")]
 
@@ -60,6 +52,7 @@ shape = SubResource("WorldBoundaryShape2D_lquwl")
 visible = false
 
 [node name="MainMenu" parent="." instance=ExtResource("6_7mycd")]
+visible = false
 
 [connection signal="exited_to_game" from="PauseMenu" to="." method="_on_pause_menu_exited_to_game"]
 [connection signal="exited_to_main_menu" from="PauseMenu" to="MainMenu" method="_on_pause_menu_exited_to_main_menu"]

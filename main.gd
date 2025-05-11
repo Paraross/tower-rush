@@ -6,6 +6,7 @@ var platform_scene: PackedScene = preload("res://platform.tscn")
 var platform_sprites: Array[Texture2D]
 
 var current_level: int = 1
+var difficulty_level: float = 1.0
 
 var spawned_platform_count: int = 0
 var reach_height: float
@@ -14,12 +15,12 @@ var platform_distance: float = 150.0
 var initial_platform_pos: float
 
 @onready var player: Player = $Player
-@onready var background: Sprite2D = $Background
 @onready var camera: Camera2D = $Camera2D
 @onready var platforms: Node = $Platforms
 @onready var left_wall: StaticBody2D = $Walls/LeftWall
 @onready var right_wall: StaticBody2D = $Walls/RightWall
 @onready var pause_menu: PauseMenu = $PauseMenu
+@onready var background: Background = $Background
 
 func _ready() -> void:
 	reach_height = player.position.y - platform_distance
@@ -34,12 +35,13 @@ func _ready() -> void:
 	load_platform_sprites()
 	
 	for platform: Platform in platforms.get_children():
-		platform.initialize(player, platform_sprites[current_level - 1])
+		platform.initialize(player, platform_sprites[current_level - 1], difficulty_level)
 	
 	# spawn some platforms ahead
 	for i in range(2):
 		spawn_next_platform()
 
+	exit()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -49,7 +51,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(_delta: float) -> void:
 	set_camera_background_positions()
-	set_background_shader_parameter()
+	background.set_player_position_in_shader(player.position.y)
 	handle_platform_spawning()
 
 
@@ -62,12 +64,8 @@ func load_platform_sprites() -> void:
 
 func set_camera_background_positions() -> void:
 	camera.position.y = player.position.y
-	background.position.y = player.position.y
-
-
-func set_background_shader_parameter() -> void:
-	var shader: ShaderMaterial = background.material
-	shader.set_shader_parameter("player_pos_y", player.position.y)
+	for background_element: Sprite2D in $Background.get_children():
+		background_element.position.y = player.position.y
 
 
 func handle_platform_spawning() -> void:
@@ -80,6 +78,7 @@ func handle_platform_spawning() -> void:
 
 func spawn_next_platform() -> void:
 	var new_platform: Platform = platform_scene.instantiate()
+	new_platform.initialize(player, platform_sprites[current_level - 1], difficulty_level)
 	
 	var platform_half_width := new_platform.desired_size.x / 2.0
 	var new_platform_x := randf_range(
@@ -90,10 +89,18 @@ func spawn_next_platform() -> void:
 	
 	new_platform.position = Vector2(new_platform_x, new_platform_y)
 	
-	new_platform.initialize(player, platform_sprites[current_level - 1])
 	platforms.add_child(new_platform)
 	
 	spawned_platform_count += 1
+	# TODO: do this properly
+	if spawned_platform_count == 6:
+		current_level += 1
+		difficulty_level += 1.0
+		background.set_sprites(current_level)
+	elif spawned_platform_count == 12:
+		current_level += 1
+		difficulty_level += 1.0
+		background.set_sprites(current_level)
 
 
 func enter() -> void:
