@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://sk8717hno8rx"]
 
 [ext_resource type="Script" uid="uid://da5lh02yir5lq" path="res://player.gd" id="1_onrkg"]
-[ext_resource type="Texture2D" uid="uid://cbs35ys6rk4c6" path="res://assets/frogs/basic_frog.png" id="2_hqtel"]
-[ext_resource type="Texture2D" uid="uid://crujb751keu6f" path="res://assets/frogs/jumping_frog.png" id="3_sweqy"]
+[ext_resource type="Texture2D" uid="uid://d2mv3jhmth5wo" path="res://assets/frogs/basic.png" id="2_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://csqsm0wmy7g3i" path="res://assets/frogs/jumping.png" id="3_hqtel"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(32, 32)
@@ -11,7 +11,7 @@ size = Vector2(32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_hqtel")
+"texture": ExtResource("2_i3pqv")
 }],
 "loop": false,
 "name": &"default",
@@ -19,7 +19,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_sweqy")
+"texture": ExtResource("3_hqtel")
 }],
 "loop": false,
 "name": &"jump",
@@ -35,7 +35,7 @@ position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_onrkg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-1, -15)
+position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_2hs0m")
 
 [node name="WallBounceTimer" type="Timer" parent="."]

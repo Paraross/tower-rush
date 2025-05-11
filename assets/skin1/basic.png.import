@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbaartltdkhq7"
-path="res://.godot/imported/dead_frog.png-4ef710c79e97c473ba8e12b8155ce225.ctex"
+uid="uid://clmglrotcxlrv"
+path="res://.godot/imported/basic.png-92ce3c9782b22b7bb36979d8a4cae7fc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://trimmed_assets/skin1/dead_frog.png"
-dest_files=["res://.godot/imported/dead_frog.png-4ef710c79e97c473ba8e12b8155ce225.ctex"]
+source_file="res://assets/skin1/basic.png"
+dest_files=["res://.godot/imported/basic.png-92ce3c9782b22b7bb36979d8a4cae7fc.ctex"]
 
 [params]
 
