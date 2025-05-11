@@ -55,7 +55,7 @@ class ParallaxFactors:
 	
 	
 	static func level3() -> ParallaxFactors:
-		return ParallaxFactors.from_values(0.5, 1.0, 1.0)
+		return ParallaxFactors.from_values(0.1, 1.0, 1.0)
 	
 	static func from_values(
 		background_f: float,
