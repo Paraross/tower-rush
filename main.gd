@@ -6,6 +6,7 @@ var platform_scene: PackedScene = preload("res://platform.tscn")
 var platform_sprites: Array[Texture2D]
 
 var current_level: int = 1
+var difficulty_level: float = 1.0
 
 var spawned_platform_count: int = 0
 var reach_height: float
@@ -34,7 +35,7 @@ func _ready() -> void:
 	load_platform_sprites()
 	
 	for platform: Platform in platforms.get_children():
-		platform.initialize(player, platform_sprites[current_level - 1])
+		platform.initialize(player, platform_sprites[current_level - 1], difficulty_level)
 	
 	# spawn some platforms ahead
 	for i in range(2):
@@ -77,7 +78,7 @@ func handle_platform_spawning() -> void:
 
 func spawn_next_platform() -> void:
 	var new_platform: Platform = platform_scene.instantiate()
-	new_platform.initialize(player, platform_sprites[current_level - 1])
+	new_platform.initialize(player, platform_sprites[current_level - 1], difficulty_level)
 	
 	var platform_half_width := new_platform.desired_size.x / 2.0
 	var new_platform_x := randf_range(
@@ -94,9 +95,11 @@ func spawn_next_platform() -> void:
 	# TODO: do this properly
 	if spawned_platform_count == 6:
 		current_level += 1
+		difficulty_level += 1.0
 		background.set_sprites(current_level)
 	elif spawned_platform_count == 12:
 		current_level += 1
+		difficulty_level += 1.0
 		background.set_sprites(current_level)
 
 
