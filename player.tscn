@@ -1,11 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://sk8717hno8rx"]
+[gd_scene load_steps=10 format=3 uid="uid://sk8717hno8rx"]
 
 [ext_resource type="Script" uid="uid://da5lh02yir5lq" path="res://player.gd" id="1_onrkg"]
+[ext_resource type="Shader" uid="uid://doysyg85vneja" path="res://player_sprite.gdshader" id="2_hqtel"]
 [ext_resource type="Texture2D" uid="uid://d2mv3jhmth5wo" path="res://assets/frogs/basic.png" id="2_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://c2o5mgybaa17p" path="res://assets/frogs/palettes/default.png" id="3_2hs0m"]
 [ext_resource type="Texture2D" uid="uid://csqsm0wmy7g3i" path="res://assets/frogs/jumping.png" id="3_hqtel"]
+[ext_resource type="Texture2D" uid="uid://bbh1ey1rfleod" path="res://assets/frogs/palettes/orange.png" id="4_1jxqw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(32, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sweqy"]
+shader = ExtResource("2_hqtel")
+shader_parameter/in_palette = ExtResource("3_2hs0m")
+shader_parameter/out_palette = ExtResource("4_1jxqw")
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2hs0m"]
 animations = [{
@@ -35,6 +43,7 @@ position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_onrkg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_sweqy")
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_2hs0m")
 
