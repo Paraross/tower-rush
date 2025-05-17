@@ -8,6 +8,10 @@ extends CharacterBody2D
 var target_velocity: Vector2 = Vector2.ZERO
 var additional_velocity: Vector2 = Vector2.ZERO
 
+var prev_velocity: Vector2 = Vector2.ZERO
+var just_jumped: bool = false
+var just_started_falling: bool = false
+
 @onready var hitbox: CollisionShape2D = $CollisionShape2D
 @onready var wall_bounce_timer: Timer = $WallBounceTimer
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -19,6 +23,8 @@ func _process(delta: float) -> void:
 	handle_animations()
 	
 	handle_collisions()
+	
+	manage_state()
 	
 	set_self_velocity()
 	move_and_slide()
@@ -36,6 +42,9 @@ func handle_horizontal_movement() -> void:
 func handle_jumping() -> void:
 	if can_jump() and Input.is_action_pressed("jump"):
 		jump()
+		just_jumped = true
+	else:
+		just_jumped = false
 
 
 func can_jump() -> bool:
@@ -76,10 +85,39 @@ func set_self_velocity() -> void:
 
 
 func handle_animations() -> void:
+	sprite.flip_h = velocity.x < 0.0
 	if is_on_floor():
-		sprite.animation = "default"
+		handle_ground_animations()
 	else:
+		handle_air_animations()
+
+
+func handle_ground_animations() -> void:
+	if velocity.x == 0:
+		sprite.animation = "idle"
+	else:
+		sprite.animation = "walk"
+	
+	sprite.play()
+
+
+func handle_air_animations() -> void:
+	if velocity.y < 0.0:
 		sprite.animation = "jump"
+	else:
+		sprite.animation = "fall"
+	
+	if just_jumped or just_started_falling:
+		sprite.play()
+
+
+func manage_state() -> void:
+	manage_falling()
+	prev_velocity = velocity
+
+
+func manage_falling() -> void:
+	just_started_falling = prev_velocity.y < 0.0 and velocity.y > 0.0
 
 
 func _on_wall_bounce_timer_timeout() -> void:

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csqsm0wmy7g3i"
-path="res://.godot/imported/jumping.png-43b38df8762b76a5ab42e40be2814048.ctex"
+uid="uid://bi8m0a67m6rak"
+path="res://.godot/imported/fall.png-98ed6b792b274814be8b6eeafd2a4c9a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/frogs/jumping.png"
-dest_files=["res://.godot/imported/jumping.png-43b38df8762b76a5ab42e40be2814048.ctex"]
+source_file="res://assets/frogs/fall.png"
+dest_files=["res://.godot/imported/fall.png-98ed6b792b274814be8b6eeafd2a4c9a.ctex"]
 
 [params]
 
