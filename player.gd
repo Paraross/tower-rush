@@ -85,30 +85,41 @@ func set_self_velocity() -> void:
 
 
 func handle_animations() -> void:
+	# INFO: order matters, first indexes take priority
+	var handlers_animations := [
+		[handle_fall_animation, &"fall"],
+		[handle_jump_animation, &"jump"],
+		[handle_walk_animation, &"walk"],
+		[handle_idle_animation, &"idle"],
+	]
+	
 	sprite.flip_h = velocity.x < 0.0
-	if is_on_floor():
-		handle_ground_animations()
-	else:
-		handle_air_animations()
+	for handler_animation: Array in handlers_animations:
+		var handler: Callable = handler_animation[0]
+		var animation: StringName = handler_animation[1]
+		
+		var animation_handled: bool = handler.call()
+		
+		if animation_handled:
+			sprite.animation = animation
+			sprite.play()
+			break
 
 
-func handle_ground_animations() -> void:
-	if velocity.x == 0:
-		sprite.animation = "idle"
-	else:
-		sprite.animation = "walk"
-	
-	sprite.play()
+func handle_idle_animation() -> bool:
+	return is_on_floor() and velocity.x == 0
 
 
-func handle_air_animations() -> void:
-	if velocity.y < 0.0:
-		sprite.animation = "jump"
-	else:
-		sprite.animation = "fall"
-	
-	if just_jumped or just_started_falling:
-		sprite.play()
+func handle_walk_animation() -> bool:
+	return is_on_floor() and velocity.x != 0
+
+
+func handle_jump_animation() -> bool:
+	return just_jumped
+
+
+func handle_fall_animation() -> bool:
+	return just_started_falling
 
 
 func manage_state() -> void:
@@ -117,7 +128,7 @@ func manage_state() -> void:
 
 
 func manage_falling() -> void:
-	just_started_falling = prev_velocity.y < 0.0 and velocity.y > 0.0
+	just_started_falling = prev_velocity.y <= 0.0 and velocity.y > 0.0
 
 
 func _on_wall_bounce_timer_timeout() -> void:
