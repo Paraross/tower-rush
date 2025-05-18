@@ -118,7 +118,7 @@ func spawn_next_platform() -> void:
 ### Later might include things like time running out.
 func game_over(reason: String) -> void:
 	print("GAME OVER")
-	print("Killed by %s" % reason)
+	print("Killed by: %s" % reason)
 	exit()
 	get_tree().call_deferred("reload_current_scene")
 

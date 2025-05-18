@@ -12,11 +12,6 @@ var current_speed: float = initial_speed
 
 func _ready() -> void:
 	pass
-	# Upewnij się, że DangerZone jest na odpowiedniej warstwie kolizji,
-	# aby mogła wykrywać gracza, ale nie inne obiekty (chyba że chcesz inaczej).
-	# Ustaw też odpowiednią maskę kolizji.
-	# Np. collision_layer = 0 (nic), collision_mask = 1 (warstwa gracza)
-	# Gracz powinien być na warstwie 1.
 
 
 func _process(delta: float) -> void:
@@ -29,7 +24,6 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	assert(body is Player)
-	print("Player caught by the danger zone!")
 	player_caught.emit("danger zone")
 	# TODO: game over screen
 
