@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://d034hcijkwa8y"]
+
+[ext_resource type="Script" uid="uid://dyxo35fienwfi" path="res://scripts/danger_zone.gd" id="1_41ndt"]
+[ext_resource type="Texture2D" uid="uid://ortvyg8i7j00" path="res://assets/extras/mushroom.png" id="2_23cf5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iraj0"]
+size = Vector2(596, 43)
+
+[node name="DangerZone" type="Area2D"]
+script = ExtResource("1_41ndt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_iraj0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0.999985, -4.76837e-07)
+scale = Vector2(18.3333, 1.17241)
+texture = ExtResource("2_23cf5")

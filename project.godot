@@ -13,7 +13,6 @@ config_version=5
 config/name="Tower Rush"
 run/main_scene="uid://d0uw1sb6c1v64"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
 
 [debug]
 

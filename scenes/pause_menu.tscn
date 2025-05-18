@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://dssyfb3gecehd"]
 
-[ext_resource type="Script" uid="uid://62hrqgkiy6l0" path="res://pause_menu.gd" id="2_nwcfo"]
-[ext_resource type="Texture2D" uid="uid://d17t3gpbwke6a" path="res://assets/ui/home.png" id="3_05uyy"]
+[ext_resource type="Script" uid="uid://62hrqgkiy6l0" path="res://scripts/pause_menu.gd" id="2_nwcfo"]
 [ext_resource type="Texture2D" uid="uid://c86g6u1e6mtwq" path="res://assets/ui/play_button.png" id="3_d3xb4"]
 [ext_resource type="Texture2D" uid="uid://dkpv83bt0lvg3" path="res://assets/ui/settings_button.png" id="4_mxa3g"]
+[ext_resource type="FontFile" uid="uid://8rcdjwvbjj5" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="5_7l7mv"]
 [ext_resource type="Texture2D" uid="uid://cqoctmvoui3fv" path="res://assets/ui/exit_button.png" id="5_e8sti"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_2nc7s"]
@@ -15,11 +15,6 @@ events = [SubResource("InputEventAction_2nc7s")]
 [node name="PauseMenu" type="CanvasLayer"]
 script = ExtResource("2_nwcfo")
 
-[node name="Background" type="Sprite2D" parent="."]
-modulate = Color(0.5, 0.5, 0.5, 0.5)
-texture = ExtResource("3_05uyy")
-centered = false
-
 [node name="Buttons" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 6
@@ -27,10 +22,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -240.0
-offset_top = -20.0
-offset_right = -76.0
-offset_bottom = 20.0
+offset_left = -189.0
+offset_top = 32.0
+offset_right = -25.0
+offset_bottom = 72.0
 grow_horizontal = 0
 grow_vertical = 2
 metadata/_edit_group_ = true
@@ -58,6 +53,15 @@ offset_right = 164.0
 offset_bottom = 124.0
 icon = ExtResource("5_e8sti")
 icon_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+offset_left = 29.0
+offset_top = 297.0
+offset_right = 179.0
+offset_bottom = 328.0
+theme_override_fonts/font = ExtResource("5_7l7mv")
+theme_override_font_sizes/font_size = 30
+text = "PAUSE"
 
 [connection signal="pressed" from="Buttons/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="pressed" from="Buttons/SettingsButton" to="." method="_on_settings_button_pressed"]

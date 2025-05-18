@@ -1,11 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://d0uw1sb6c1v64"]
+[gd_scene load_steps=10 format=3 uid="uid://d0uw1sb6c1v64"]
 
-[ext_resource type="PackedScene" uid="uid://sk8717hno8rx" path="res://player.tscn" id="1_0xm2m"]
-[ext_resource type="Script" uid="uid://dnp4lmqy3urp1" path="res://main.gd" id="1_h2yge"]
-[ext_resource type="PackedScene" uid="uid://c0l13mcrbqiam" path="res://platform.tscn" id="2_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://3e1x3vxmnc8h" path="res://background.tscn" id="2_7mycd"]
-[ext_resource type="PackedScene" uid="uid://ds31qgkich110" path="res://main_menu.tscn" id="6_7mycd"]
-[ext_resource type="PackedScene" uid="uid://dssyfb3gecehd" path="res://pause_menu.tscn" id="7_272bh"]
+[ext_resource type="Script" uid="uid://dnp4lmqy3urp1" path="res://scripts/main.gd" id="1_tefeu"]
+[ext_resource type="PackedScene" uid="uid://3e1x3vxmnc8h" path="res://scenes/background.tscn" id="2_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://sk8717hno8rx" path="res://scenes/player.tscn" id="3_tipki"]
+[ext_resource type="PackedScene" uid="uid://c0l13mcrbqiam" path="res://scenes/platform.tscn" id="4_85g3d"]
+[ext_resource type="PackedScene" uid="uid://dssyfb3gecehd" path="res://scenes/pause_menu.tscn" id="5_choun"]
+[ext_resource type="PackedScene" uid="uid://d034hcijkwa8y" path="res://scenes/danger_zone.tscn" id="5_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://ds31qgkich110" path="res://scenes/main_menu.tscn" id="6_ya4ey"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1bvp3"]
 normal = Vector2(1, 0)
@@ -14,19 +15,19 @@ normal = Vector2(1, 0)
 normal = Vector2(-1, 0)
 
 [node name="Main" type="Node"]
-script = ExtResource("1_h2yge")
+script = ExtResource("1_tefeu")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -100)
 
-[node name="Background" parent="." instance=ExtResource("2_7mycd")]
+[node name="Background" parent="." instance=ExtResource("2_o6xl0")]
 position = Vector2(0, -100)
 
-[node name="Player" parent="." instance=ExtResource("1_0xm2m")]
+[node name="Player" parent="." instance=ExtResource("3_tipki")]
 
 [node name="Platforms" type="Node" parent="."]
 
-[node name="Floor" parent="Platforms" instance=ExtResource("2_0xm2m")]
+[node name="Floor" parent="Platforms" instance=ExtResource("4_85g3d")]
 position = Vector2(1, 8)
 scale = Vector2(2.84, 1)
 
@@ -48,10 +49,13 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
 shape = SubResource("WorldBoundaryShape2D_lquwl")
 
-[node name="PauseMenu" parent="." instance=ExtResource("7_272bh")]
+[node name="DangerZone" parent="." instance=ExtResource("5_o6xl0")]
+position = Vector2(0, 109)
+
+[node name="PauseMenu" parent="." instance=ExtResource("5_choun")]
 visible = false
 
-[node name="MainMenu" parent="." instance=ExtResource("6_7mycd")]
+[node name="MainMenu" parent="." instance=ExtResource("6_ya4ey")]
 visible = false
 
 [connection signal="exited_to_game" from="PauseMenu" to="." method="_on_pause_menu_exited_to_game"]

@@ -2,7 +2,7 @@ extends Node
 
 const MAX_LEVEL: int = 3
 
-var platform_scene: PackedScene = preload("res://platform.tscn")
+var platform_scene: PackedScene = preload("res://scenes/platform.tscn")
 var platform_sprites: Array[Texture2D]
 
 var current_level: int = 1
@@ -23,7 +23,7 @@ var score: int = 0
 @onready var right_wall: StaticBody2D = $Walls/RightWall
 @onready var pause_menu: PauseMenu = $PauseMenu
 @onready var background: Background = $Background
-
+@onready var danger_zone: DangerZone = $DangerZone
 # TODO: fix jittering. smooth camera on youtube?
 
 func _ready() -> void:
@@ -44,7 +44,13 @@ func _ready() -> void:
 	# spawn some platforms ahead
 	for i in range(2):
 		spawn_next_platform()
-
+	
+	
+	# Inicjalizacja DangerZone
+	var screen_size_y: float = get_viewport().get_visible_rect().size.y # <<< POPRAWIONA LINIA
+	var initial_danger_zone_y: float = player.position.y + screen_size_y / 2 + 50 # Trochę poniżej widoku
+	danger_zone.start_moving(initial_danger_zone_y) # Przekaż pozycję startową
+	danger_zone.player_caught.connect(_on_player_caught)
 	exit()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -57,6 +63,14 @@ func _process(_delta: float) -> void:
 	set_camera_background_positions()
 	background.set_player_position_in_shader(player.position.y)
 	handle_platform_spawning()
+	# Sprawdzanie, czy gracz nie spadł poniżej DangerZone
+	# (dodatkowe zabezpieczenie, jeśli kolizja Area2D by zawiodła lub dla natychmiastowej reakcji)
+	@warning_ignore("unsafe_property_access")
+	if player.global_position.y > danger_zone.global_position.y + (danger_zone.get_node("CollisionShape2D").shape.size.y / 2):
+		 # Dodajemy połowę wysokości DangerZone, aby upewnić się, że gracz jest faktycznie PONIŻEJ
+		if player.is_processing(): # Sprawdź, czy gra nie jest już zakończona/spauzowana
+			print("Gracz spadł poniżej DangerZone!")
+			_on_player_caught()
 
 
 func load_platform_sprites() -> void:
@@ -101,22 +115,36 @@ func spawn_next_platform() -> void:
 		current_level += 1
 		difficulty_level += 1.0
 		background.set_sprites(current_level)
+		danger_zone.increase_difficulty_speed(150)
 	elif spawned_platform_count == 12:
 		current_level += 1
 		difficulty_level += 1.0
 		background.set_sprites(current_level)
+		danger_zone.increase_difficulty_speed(220)
+
+
+
+func _on_player_caught() -> void:
+	# Logika końca gry
+	print("GAME OVER - Player caught or fell into DangerZone")
+	exit() # Zatrzymuje przetwarzanie dla Main i Player
+	# Użyj call_deferred do przeładowania scen  
+	get_tree().call_deferred("reload_current_scene")
+
 
 
 func enter() -> void:
 	set_process(true)
 	set_process_unhandled_input(true)
 	player.set_process(true)
+	danger_zone.set_process(true) # Wznów ruch DangerZone
 
 
 func exit() -> void:
 	set_process(false)
 	set_process_unhandled_input(false)
 	player.set_process(false)
+	danger_zone.set_process(false) # Wznów ruch DangerZone
 
 
 func _on_main_menu_exited_to_game() -> void:
