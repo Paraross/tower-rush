@@ -49,7 +49,6 @@ func _ready() -> void:
 	var screen_size_y := get_viewport().get_visible_rect().size.y
 	var initial_danger_zone_y := player.position.y + screen_size_y / 2 + 50
 	danger_zone.start_moving(initial_danger_zone_y)
-	danger_zone.player_caught.connect(_on_player_caught)
 	exit()
 
 

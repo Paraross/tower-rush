@@ -18,9 +18,6 @@ func _ready() -> void:
 	# Np. collision_layer = 0 (nic), collision_mask = 1 (warstwa gracza)
 	# Gracz powinien być na warstwie 1.
 
-	# Podłącz sygnał body_entered, aby wykryć kolizję z graczem
-	body_entered.connect(_on_body_entered)
-
 
 func _process(delta: float) -> void:
 	position.y -= current_speed * delta
