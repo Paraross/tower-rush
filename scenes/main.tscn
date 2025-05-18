@@ -58,7 +58,6 @@ visible = false
 [node name="MainMenu" parent="." instance=ExtResource("6_ya4ey")]
 visible = false
 
-[connection signal="body_entered" from="DangerZone" to="DangerZone" method="_on_body_entered"]
 [connection signal="player_caught" from="DangerZone" to="." method="game_over"]
 [connection signal="exited_to_game" from="PauseMenu" to="." method="_on_pause_menu_exited_to_game"]
 [connection signal="exited_to_main_menu" from="PauseMenu" to="MainMenu" method="_on_pause_menu_exited_to_main_menu"]
