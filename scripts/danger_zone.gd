@@ -8,10 +8,10 @@ signal player_caught(reason: String)
 @export var initial_speed: float = 100.0
 @export var max_speed: float = 250.0
 
-var current_speed: float
+var current_speed: float = initial_speed
 
 func _ready() -> void:
-	current_speed = initial_speed
+	pass
 	# Upewnij się, że DangerZone jest na odpowiedniej warstwie kolizji,
 	# aby mogła wykrywać gracza, ale nie inne obiekty (chyba że chcesz inaczej).
 	# Ustaw też odpowiednią maskę kolizji.
@@ -34,9 +34,8 @@ func _on_body_entered(body: Node2D) -> void:
 		# TODO: game over screen
 
 
-func start_moving(start_position_y: float) -> void:
+func initialize(start_position_y: float) -> void:
 	position.y = start_position_y
-	current_speed = initial_speed
 
 
 func increase_difficulty_speed(new_base_speed: float) -> void:

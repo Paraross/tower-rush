@@ -48,7 +48,7 @@ func _ready() -> void:
 	# Inicjalizacja DangerZone
 	var screen_size_y := get_viewport().get_visible_rect().size.y
 	var initial_danger_zone_y := player.position.y + screen_size_y / 2 + 50
-	danger_zone.start_moving(initial_danger_zone_y)
+	danger_zone.initialize(initial_danger_zone_y)
 	exit()
 
 
