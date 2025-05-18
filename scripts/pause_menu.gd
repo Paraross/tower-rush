@@ -3,7 +3,6 @@ class_name PauseMenu
 extends CanvasLayer
 
 signal exited_to_game
-signal exited_to_main_menu
 
 func _ready() -> void:
 	exit()
@@ -24,11 +23,6 @@ func _on_exit_button_pressed() -> void:
 func exit_to_game() -> void:
 	exit()
 	exited_to_game.emit()
-
-
-func exit_to_main_menu() -> void:
-	exit()
-	exited_to_main_menu.emit()
 
 
 func exit() -> void:
