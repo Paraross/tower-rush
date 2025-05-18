@@ -1,0 +1,86 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkoadxayaeo0x"]
+
+[ext_resource type="Theme" uid="uid://cu13x3oxyvlv1" path="res://scripts/ui_button_pause.theme" id="1_6ebp1"]
+[ext_resource type="Script" uid="uid://bckg5gvcu0wtf" path="res://scripts/game_over_menu.gd" id="1_cwb3k"]
+
+[node name="GameOverMenu" type="CanvasLayer"]
+script = ExtResource("1_cwb3k")
+
+[node name="Buttons" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 140.0
+offset_right = -80.0
+offset_bottom = 140.0
+grow_horizontal = 2
+theme = ExtResource("1_6ebp1")
+
+[node name="PlayAgainButton" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 36.0
+text = "PLAY AGAIN"
+
+[node name="MainMenuButton" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_top = 44.0
+offset_right = 160.0
+offset_bottom = 80.0
+text = "MAIN MENU"
+
+[node name="ExitButton" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_top = 88.0
+offset_right = 160.0
+offset_bottom = 124.0
+text = "EXIT GAME"
+
+[node name="GameOverLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -138.0
+offset_top = 61.0
+offset_right = 138.0
+offset_bottom = 93.0
+grow_horizontal = 2
+theme = ExtResource("1_6ebp1")
+theme_override_font_sizes/font_size = 32
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MessageLabel" type="Label" parent="GameOverLabel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -68.5
+offset_top = 43.0
+offset_right = 68.5
+offset_bottom = 51.0
+grow_horizontal = 2
+theme = ExtResource("1_6ebp1")
+theme_override_font_sizes/font_size = 8
+text = "YOU WERE KILLED BY:"
+
+[node name="DeathReasonLabel" type="Label" parent="GameOverLabel/MessageLabel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 12.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+theme = ExtResource("1_6ebp1")
+theme_override_font_sizes/font_size = 8
+text = "<MSG>"
+
+[connection signal="pressed" from="Buttons/PlayAgainButton" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="Buttons/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="Buttons/ExitButton" to="." method="_on_exit_button_pressed"]

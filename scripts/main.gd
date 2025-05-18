@@ -22,6 +22,7 @@ var score: int = 0
 @onready var left_wall: StaticBody2D = $Walls/LeftWall
 @onready var right_wall: StaticBody2D = $Walls/RightWall
 @onready var pause_menu: PauseMenu = $PauseMenu
+@onready var game_over_menu: GameOverMenu = $GameOverMenu
 @onready var background: Background = $Background
 @onready var danger_zone: DangerZone = $DangerZone
 # TODO: fix jittering. smooth camera on youtube?
@@ -117,10 +118,9 @@ func spawn_next_platform() -> void:
 ### Reason is currently only danger zone.
 ### Later might include things like time running out.
 func game_over(reason: String) -> void:
-	print("GAME OVER")
-	print("Killed by: %s" % reason)
 	exit()
-	get_tree().call_deferred("reload_current_scene")
+	game_over_menu.death_reason = reason.to_upper()
+	game_over_menu.enter()
 
 
 func enter() -> void:

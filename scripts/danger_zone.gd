@@ -25,7 +25,6 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	assert(body is Player)
 	player_caught.emit("danger zone")
-	# TODO: game over screen
 
 
 func initialize(start_position_y: float) -> void:
