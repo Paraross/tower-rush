@@ -3,15 +3,15 @@
 [ext_resource type="Script" uid="uid://dyxo35fienwfi" path="res://scripts/danger_zone.gd" id="1_41ndt"]
 [ext_resource type="Texture2D" uid="uid://ortvyg8i7j00" path="res://assets/extras/mushroom.png" id="2_23cf5"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_iraj0"]
-size = Vector2(596, 43)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_23cf5"]
+distance = 20.0
 
 [node name="DangerZone" type="Area2D"]
 collision_layer = 8
 script = ExtResource("1_41ndt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_iraj0")
+shape = SubResource("WorldBoundaryShape2D_23cf5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0.999985, -4.76837e-07)
