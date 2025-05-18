@@ -18,7 +18,7 @@ func _on_settings_button_pressed() -> void:
 
 
 func _on_exit_button_pressed() -> void:
-	exit_to_main_menu()
+	get_tree().call_deferred("reload_current_scene")
 
 
 func exit_to_game() -> void:
