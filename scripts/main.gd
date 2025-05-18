@@ -114,8 +114,11 @@ func spawn_next_platform() -> void:
 		danger_zone.increase_difficulty_speed(220)
 
 
-func _on_player_caught() -> void:
-	print("GAME OVER - Player caught or fell into DangerZone")
+### Reason is currently only danger zone.
+### Later might include things like time running out.
+func game_over(reason: String) -> void:
+	print("GAME OVER")
+	print("Killed by %s" % reason)
 	exit()
 	get_tree().call_deferred("reload_current_scene")
 
@@ -124,14 +127,14 @@ func enter() -> void:
 	set_process(true)
 	set_process_unhandled_input(true)
 	player.set_process(true)
-	danger_zone.set_process(true) # Wznów ruch DangerZone
+	danger_zone.set_process(true)
 
 
 func exit() -> void:
 	set_process(false)
 	set_process_unhandled_input(false)
 	player.set_process(false)
-	danger_zone.set_process(false) # Wznów ruch DangerZone
+	danger_zone.set_process(false)
 
 
 func _on_main_menu_exited_to_game() -> void:
