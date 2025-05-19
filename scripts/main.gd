@@ -24,7 +24,14 @@ var score: int = 0
 @onready var pause_menu: PauseMenu = $PauseMenu
 @onready var game_over_menu: GameOverMenu = $GameOverMenu
 @onready var background: Background = $Background
+
 @onready var danger_zone: DangerZone = $DangerZone
+@onready var score_label: Label = $Camera2D/ScoreLabel
+
+@export var coin_scene: PackedScene = preload("res://scenes/coin.tscn")
+@export var coin_spawn_chance: float = 0.3  
+var coin_spawn_height_offset: float = -60.0  # height above platform
+
 # TODO: fix jittering. smooth camera on youtube?
 
 func _ready() -> void:
@@ -63,6 +70,7 @@ func _process(_delta: float) -> void:
 	set_camera_background_positions()
 	background.set_player_position_in_shader(player.position.y)
 	handle_platform_spawning()
+	update_score_display()
 
 
 func load_platform_sprites() -> void:
@@ -84,6 +92,10 @@ func handle_platform_spawning() -> void:
 	
 	spawn_next_platform()
 	reach_height -= platform_distance
+	
+	score += int(difficulty_level)
+	update_score_display()
+	animate_score()
 
 
 func spawn_next_platform() -> void:
@@ -101,6 +113,9 @@ func spawn_next_platform() -> void:
 	
 	platforms.add_child(new_platform)
 	
+	if randf() < coin_spawn_chance:
+		spawn_coin_above_platform(new_platform)
+	
 	spawned_platform_count += 1
 	# TODO: do this properly
 	if spawned_platform_count == 6:
@@ -113,6 +128,35 @@ func spawn_next_platform() -> void:
 		difficulty_level += 1.0
 		background.set_sprites(current_level)
 		danger_zone.increase_difficulty_speed(220)
+
+
+func spawn_coin_above_platform(platform: Platform) -> void:
+	var coin: Coin = coin_scene.instantiate() as Coin
+	 # Ustaw pozycję monety (środek platformy + offset w górę)
+	coin.position = Vector2(
+		platform.position.x,
+		platform.position.y + coin_spawn_height_offset
+	)   
+	   # Dodaj monetę do sceny
+	add_child(coin)
+	 # Podłącz sygnał (jeśli nie masz jeszcze połączenia w scenie)
+	coin.coin_collected.connect(_on_coin_collected)
+
+func _on_coin_collected(value: int) -> void:
+	score += value
+	update_score_display()
+
+
+func update_score_display() -> void:
+	score_label.text = str(score)
+	
+
+func animate_score() -> void:
+	var tween: Tween = create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)  # Ustawienie płynnego przejścia
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(score_label, "scale", Vector2(1.2, 1.2), 0.1)
+	tween.tween_property(score_label, "scale", Vector2(1.0, 1.0), 0.1)
 
 
 ### Reason is currently only danger zone.

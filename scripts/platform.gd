@@ -18,6 +18,7 @@ func _ready() -> void:
 	if sprite_texture == null:
 		return
 	
+	z_index = 3
 	var size := sprite_texture.get_size()
 	var ratio := desired_size / size
 	sprite.scale = ratio

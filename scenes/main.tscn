@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d0uw1sb6c1v64"]
+[gd_scene load_steps=13 format=3 uid="uid://d0uw1sb6c1v64"]
 
 [ext_resource type="Script" uid="uid://dnp4lmqy3urp1" path="res://scripts/main.gd" id="1_tefeu"]
 [ext_resource type="PackedScene" uid="uid://3e1x3vxmnc8h" path="res://scenes/background.tscn" id="2_o6xl0"]
@@ -8,7 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://d034hcijkwa8y" path="res://scenes/danger_zone.tscn" id="5_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://ds31qgkich110" path="res://scenes/main_menu.tscn" id="6_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://bkoadxayaeo0x" path="res://scenes/game_over_menu.tscn" id="8_tipki"]
-[ext_resource type="PackedScene" uid="uid://bh348e0qnnql7" path="res://scenes/skin_select_menu.tscn" id="9_85g3d"]
+[ext_resource type="FontFile" uid="uid://8rcdjwvbjj5" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="9_85g3d"]
+[ext_resource type="PackedScene" uid="uid://bh348e0qnnql7" path="res://scenes/skin_select_menu.tscn" id="10_choun"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1bvp3"]
 normal = Vector2(1, 0)
@@ -22,10 +23,21 @@ script = ExtResource("1_tefeu")
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -100)
 
+[node name="ScoreLabel" type="Label" parent="Camera2D"]
+z_index = 10
+offset_left = -289.0
+offset_top = -256.0
+offset_right = -260.0
+offset_bottom = -226.0
+theme_override_fonts/font = ExtResource("9_85g3d")
+theme_override_font_sizes/font_size = 29
+text = "0"
+
 [node name="Background" parent="." instance=ExtResource("2_o6xl0")]
 position = Vector2(0, -100)
 
 [node name="Player" parent="." instance=ExtResource("3_tipki")]
+z_index = 5
 
 [node name="Platforms" type="Node" parent="."]
 
@@ -63,7 +75,7 @@ visible = false
 [node name="GameOverMenu" parent="." instance=ExtResource("8_tipki")]
 visible = false
 
-[node name="SkinSelectMenu" parent="." instance=ExtResource("9_85g3d")]
+[node name="SkinSelectMenu" parent="." instance=ExtResource("10_choun")]
 visible = false
 
 [connection signal="player_caught" from="DangerZone" to="." method="game_over"]
