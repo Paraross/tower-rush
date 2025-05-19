@@ -16,14 +16,24 @@ var initial_platform_pos: float
 
 var score: int = 0
 
+var last_platform_y: float = 0.0  # Śledzimy pozycję ostatniej platformy
+
 @onready var player: Player = $Player
 @onready var camera: Camera2D = $Camera2D
 @onready var platforms: Node = $Platforms
 @onready var left_wall: StaticBody2D = $Walls/LeftWall
 @onready var right_wall: StaticBody2D = $Walls/RightWall
 @onready var pause_menu: PauseMenu = $PauseMenu
+@onready var game_over_menu: GameOverMenu = $GameOverMenu
 @onready var background: Background = $Background
+
 @onready var danger_zone: DangerZone = $DangerZone
+@onready var score_label: Label = $Camera2D/ScoreLabel
+
+@export var coin_scene: PackedScene = preload("res://scenes/coin.tscn")
+@export var coin_spawn_chance: float = 0.3  
+var coin_spawn_height_offset: float = -60.0  # height above platform
+
 # TODO: fix jittering. smooth camera on youtube?
 
 func _ready() -> void:
@@ -45,13 +55,14 @@ func _ready() -> void:
 	for i in range(2):
 		spawn_next_platform()
 	
-	
 	# Inicjalizacja DangerZone
-	var screen_size_y: float = get_viewport().get_visible_rect().size.y # <<< POPRAWIONA LINIA
-	var initial_danger_zone_y: float = player.position.y + screen_size_y / 2 + 50 # Trochę poniżej widoku
-	danger_zone.start_moving(initial_danger_zone_y) # Przekaż pozycję startową
-	danger_zone.player_caught.connect(_on_player_caught)
+	var screen_size_y := get_viewport().get_visible_rect().size.y
+	var initial_danger_zone_y := player.position.y + screen_size_y / 2 + 50
+	danger_zone.initialize(initial_danger_zone_y)
 	exit()
+	
+	last_platform_y = player.position.y  # Inicjalizacja
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -63,14 +74,7 @@ func _process(_delta: float) -> void:
 	set_camera_background_positions()
 	background.set_player_position_in_shader(player.position.y)
 	handle_platform_spawning()
-	# Sprawdzanie, czy gracz nie spadł poniżej DangerZone
-	# (dodatkowe zabezpieczenie, jeśli kolizja Area2D by zawiodła lub dla natychmiastowej reakcji)
-	@warning_ignore("unsafe_property_access")
-	if player.global_position.y > danger_zone.global_position.y + (danger_zone.get_node("CollisionShape2D").shape.size.y / 2):
-		 # Dodajemy połowę wysokości DangerZone, aby upewnić się, że gracz jest faktycznie PONIŻEJ
-		if player.is_processing(): # Sprawdź, czy gra nie jest już zakończona/spauzowana
-			print("Gracz spadł poniżej DangerZone!")
-			_on_player_caught()
+	update_score_display()
 
 
 func load_platform_sprites() -> void:
@@ -92,6 +96,10 @@ func handle_platform_spawning() -> void:
 	
 	spawn_next_platform()
 	reach_height -= platform_distance
+	
+	score += int(difficulty_level)
+	update_score_display()
+	animate_score()
 
 
 func spawn_next_platform() -> void:
@@ -109,6 +117,9 @@ func spawn_next_platform() -> void:
 	
 	platforms.add_child(new_platform)
 	
+	if randf() < coin_spawn_chance:
+		spawn_coin_above_platform(new_platform)
+	
 	spawned_platform_count += 1
 	# TODO: do this properly
 	if spawned_platform_count == 6:
@@ -124,27 +135,57 @@ func spawn_next_platform() -> void:
 
 
 
-func _on_player_caught() -> void:
-	# Logika końca gry
-	print("GAME OVER - Player caught or fell into DangerZone")
-	exit() # Zatrzymuje przetwarzanie dla Main i Player
-	# Użyj call_deferred do przeładowania scen  
-	get_tree().call_deferred("reload_current_scene")
+func spawn_coin_above_platform(platform: Platform) -> void:
+	var coin: Coin = coin_scene.instantiate() as Coin
+	 # Ustaw pozycję monety (środek platformy + offset w górę)
+	coin.position = Vector2(
+		platform.position.x,
+		platform.position.y + coin_spawn_height_offset
+	)   
+	   # Dodaj monetę do sceny
+	add_child(coin)
+	 # Podłącz sygnał (jeśli nie masz jeszcze połączenia w scenie)
+	coin.coin_collected.connect(_on_coin_collected)
 
+func _on_coin_collected(value: int) -> void:
+	score += value
+	update_score_display()
+
+
+func update_score_display() -> void:
+	score_label.text = str(score)
+	
+
+func animate_score() -> void:
+	var tween: Tween = create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)  # Ustawienie płynnego przejścia
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(score_label, "scale", Vector2(1.2, 1.2), 0.1)
+	tween.tween_property(score_label, "scale", Vector2(1.0, 1.0), 0.1)
+	
+	# Możesz też dodać dźwięk:
+	# score_sound.play()
+
+### Reason is currently only danger zone.
+### Later might include things like time running out.
+func game_over(reason: String) -> void:
+	exit()
+	game_over_menu.death_reason = reason.to_upper()
+	game_over_menu.enter()
 
 
 func enter() -> void:
 	set_process(true)
 	set_process_unhandled_input(true)
 	player.set_process(true)
-	danger_zone.set_process(true) # Wznów ruch DangerZone
+	danger_zone.set_process(true)
 
 
 func exit() -> void:
 	set_process(false)
 	set_process_unhandled_input(false)
 	player.set_process(false)
-	danger_zone.set_process(false) # Wznów ruch DangerZone
+	danger_zone.set_process(false)
 
 
 func _on_main_menu_exited_to_game() -> void:
