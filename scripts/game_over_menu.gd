@@ -18,7 +18,7 @@ func _ready() -> void:
 
 
 func _on_play_again_button_pressed() -> void:
-	pass # Replace with function body.
+	pass
 
 
 func _on_main_menu_button_pressed() -> void:

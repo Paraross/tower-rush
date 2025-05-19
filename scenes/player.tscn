@@ -16,6 +16,9 @@ shape = SubResource("RectangleShape2D_onrkg")
 
 [node name="AnimatedSprite2D" parent="." instance=ExtResource("2_g2els")]
 position = Vector2(0, -16)
+animation = &"jump"
+frame = 4
+frame_progress = 1.0
 
 [node name="WallBounceTimer" type="Timer" parent="."]
 wait_time = 0.5

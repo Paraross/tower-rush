@@ -32,6 +32,10 @@ var score: int = 0
 @export var coin_spawn_chance: float = 0.3
 var coin_spawn_height_offset: float = -24.0
 
+@export var bat_scene: PackedScene = preload("res://scenes/bat.tscn")
+@export var bat_spawn_chance: float = 0.2  # 20% szansy na spawn nietoperza przy platformie
+var bat_spawn_height_range: Vector2 = Vector2(-150, -300)  # Zakres Y względem platformy
+
 # TODO: fix jittering. smooth camera on youtube?
 
 func _ready() -> void:
@@ -53,11 +57,16 @@ func _ready() -> void:
 	for i in range(2):
 		spawn_next_platform()
 	
-	# initialize danger zone
+	_init_danger_zone()
+	
+	
+	exit()
+
+func _init_danger_zone() -> void:
+		# initialize danger zone
 	var screen_size_y := get_viewport().get_visible_rect().size.y
 	var initial_danger_zone_y := player.position.y + screen_size_y / 2 + 50
 	danger_zone.initialize(initial_danger_zone_y)
-	exit()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -113,6 +122,11 @@ func spawn_next_platform() -> void:
 	
 	platforms.add_child(new_platform)
 	
+		# Losowe tworzenie nietoperzy
+	if randf() < bat_spawn_chance:
+		spawn_bat_near_platform(new_platform)
+	
+		
 	if randf() < coin_spawn_chance:
 		spawn_coin_above_platform(new_platform)
 	
@@ -161,6 +175,24 @@ func animate_score() -> void:
 	tween.tween_property(score_label, "scale", Vector2(1.2, 1.2), 0.1)
 	tween.tween_property(score_label, "scale", Vector2(1.0, 1.0), 0.1)
 
+
+func spawn_bat_near_platform(platform: Platform) -> void:
+	var bat: Bat = bat_scene.instantiate()
+	
+	 # Losowa pozycja X (z marginesem od krawędzi platformy)
+	var random_x := randf_range(
+		platform.position.x - platform.desired_size.x / 3,
+		platform.position.x + platform.desired_size.x / 3
+	)
+		# Losowa pozycja Y (w zakresie bat_spawn_height_range)
+	var random_y := platform.position.y + randf_range(
+		bat_spawn_height_range.x,
+		bat_spawn_height_range.y
+	) 
+	bat.position = Vector2(random_x, random_y)
+	 # Podpięcie sygnału
+	bat.player_caught.connect(game_over)
+	add_child(bat)
 
 ### Reason is currently only danger zone.
 ### Later might include things like time running out.
