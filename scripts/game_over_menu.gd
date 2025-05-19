@@ -6,7 +6,12 @@ var death_reason: String:
 	set(value):
 		death_reason_label.text = value
 
+var points: int:
+	set(value):
+		points_label.text = "%s POINTS" % value
+
 @onready var death_reason_label: Label = $GameOverLabel/MessageLabel/DeathReasonLabel
+@onready var points_label: Label = $GameOverLabel/ScoreLabel/ScorePointsLabel
 
 func _ready() -> void:
 	exit()

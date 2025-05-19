@@ -121,6 +121,7 @@ func game_over(reason: String) -> void:
 	exit()
 	player.sprite.animation = "dead"
 	game_over_menu.death_reason = reason.to_upper()
+	game_over_menu.points = score
 	game_over_menu.enter()
 
 
