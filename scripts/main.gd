@@ -137,11 +137,3 @@ func exit() -> void:
 	set_process_unhandled_input(false)
 	player.set_process(false)
 	danger_zone.set_process(false)
-
-
-func _on_main_menu_exited_to_game() -> void:
-	enter()
-
-
-func _on_pause_menu_exited_to_game() -> void:
-	enter()

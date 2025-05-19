@@ -1,0 +1,69 @@
+[gd_scene load_steps=5 format=3 uid="uid://bh348e0qnnql7"]
+
+[ext_resource type="Script" uid="uid://d4fp5emtnilcy" path="res://scripts/skin_select_menu.gd" id="1_3if6s"]
+[ext_resource type="Texture2D" uid="uid://d17t3gpbwke6a" path="res://assets/ui/home.png" id="1_hi6ix"]
+[ext_resource type="PackedScene" uid="uid://gves3qniaiqa" path="res://scenes/player_sprite.tscn" id="2_ygugx"]
+[ext_resource type="Theme" uid="uid://cu13x3oxyvlv1" path="res://scripts/ui_button_pause.theme" id="3_712vo"]
+
+[node name="SkinSelectMenu" type="CanvasLayer"]
+script = ExtResource("1_3if6s")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_hi6ix")
+centered = false
+
+[node name="PlayerSprite" parent="." instance=ExtResource("2_ygugx")]
+position = Vector2(460, 184)
+
+[node name="Buttons" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 460.0
+offset_top = 208.0
+offset_right = 460.0
+offset_bottom = 208.0
+theme = ExtResource("3_712vo")
+
+[node name="GreenButton" type="Button" parent="Buttons"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.0
+offset_right = 60.0
+offset_bottom = 24.0
+grow_horizontal = 2
+text = "GREEN"
+
+[node name="OrangeButton" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_left = -60.0
+offset_top = 30.0
+offset_right = 60.0
+offset_bottom = 54.0
+text = "ORANGE"
+
+[node name="PurpleButton" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_left = -60.0
+offset_top = 60.0
+offset_right = 60.0
+offset_bottom = 84.0
+text = "PURPLE"
+
+[node name="BackButton" type="Button" parent="Buttons"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.0
+offset_top = 96.0
+offset_right = 40.0
+offset_bottom = 120.0
+grow_horizontal = 2
+text = "BACK"
+
+[connection signal="pressed" from="Buttons/GreenButton" to="." method="_on_green_button_pressed"]
+[connection signal="pressed" from="Buttons/OrangeButton" to="." method="_on_orange_button_pressed"]
+[connection signal="pressed" from="Buttons/PurpleButton" to="." method="_on_purple_button_pressed"]
+[connection signal="pressed" from="Buttons/BackButton" to="." method="_on_back_button_pressed"]

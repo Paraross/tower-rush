@@ -3,6 +3,7 @@ class_name MainMenu
 extends CanvasLayer
 
 signal exited_to_game
+signal exited_to_skin_select
 
 func _ready() -> void:
 	enter()
@@ -13,7 +14,7 @@ func _on_play_button_pressed() -> void:
 
 
 func _on_settings_button_pressed() -> void:
-	pass
+	exit_to_skin_select()
 
 
 func _on_exit_button_pressed() -> void:
@@ -23,15 +24,20 @@ func _on_exit_button_pressed() -> void:
 
 
 func exit_to_game() -> void:
-	set_process_input(false)
+	exit()
 	exited_to_game.emit()
+
+
+func exit_to_skin_select() -> void:
+	exit()
+	exited_to_skin_select.emit()
+
+
+func exit() -> void:
+	set_process_input(false)
 	hide()
 
 
 func enter() -> void:
 	set_process_input(true)
 	show()
-
-
-func _on_pause_menu_exited_to_main_menu() -> void:
-	enter()

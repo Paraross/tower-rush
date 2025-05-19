@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://d0uw1sb6c1v64"]
+[gd_scene load_steps=12 format=3 uid="uid://d0uw1sb6c1v64"]
 
 [ext_resource type="Script" uid="uid://dnp4lmqy3urp1" path="res://scripts/main.gd" id="1_tefeu"]
 [ext_resource type="PackedScene" uid="uid://3e1x3vxmnc8h" path="res://scenes/background.tscn" id="2_o6xl0"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://d034hcijkwa8y" path="res://scenes/danger_zone.tscn" id="5_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://ds31qgkich110" path="res://scenes/main_menu.tscn" id="6_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://bkoadxayaeo0x" path="res://scenes/game_over_menu.tscn" id="8_tipki"]
+[ext_resource type="PackedScene" uid="uid://bh348e0qnnql7" path="res://scenes/skin_select_menu.tscn" id="9_85g3d"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1bvp3"]
 normal = Vector2(1, 0)
@@ -62,6 +63,11 @@ visible = false
 [node name="GameOverMenu" parent="." instance=ExtResource("8_tipki")]
 visible = false
 
+[node name="SkinSelectMenu" parent="." instance=ExtResource("9_85g3d")]
+visible = false
+
 [connection signal="player_caught" from="DangerZone" to="." method="game_over"]
-[connection signal="exited_to_game" from="PauseMenu" to="." method="_on_pause_menu_exited_to_game"]
-[connection signal="exited_to_game" from="MainMenu" to="." method="_on_main_menu_exited_to_game"]
+[connection signal="exited_to_game" from="PauseMenu" to="." method="enter"]
+[connection signal="exited_to_game" from="MainMenu" to="." method="enter"]
+[connection signal="exited_to_skin_select" from="MainMenu" to="SkinSelectMenu" method="enter"]
+[connection signal="exited_to_main_menu" from="SkinSelectMenu" to="MainMenu" method="enter"]
