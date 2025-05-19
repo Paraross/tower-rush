@@ -119,6 +119,7 @@ func spawn_next_platform() -> void:
 ### Later might include things like time running out.
 func game_over(reason: String) -> void:
 	exit()
+	player.sprite.animation = "dead"
 	game_over_menu.death_reason = reason.to_upper()
 	game_over_menu.enter()
 

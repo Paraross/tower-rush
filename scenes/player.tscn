@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://sk8717hno8rx"]
+[gd_scene load_steps=26 format=3 uid="uid://sk8717hno8rx"]
 
 [ext_resource type="Script" uid="uid://da5lh02yir5lq" path="res://scripts/player.gd" id="1_onrkg"]
 [ext_resource type="Shader" uid="uid://doysyg85vneja" path="res://scripts/player_sprite.gdshader" id="2_hqtel"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bbh1ey1rfleod" path="res://assets/frogs/palettes/orange.png" id="4_1jxqw"]
 [ext_resource type="Texture2D" uid="uid://d2ujtqdm6e14l" path="res://assets/frogs/idle.png" id="5_1jxqw"]
 [ext_resource type="Texture2D" uid="uid://bi8m0a67m6rak" path="res://assets/frogs/fall.png" id="5_dw050"]
+[ext_resource type="Texture2D" uid="uid://do76wyllymajs" path="res://assets/frogs/dead.png" id="5_ur7pv"]
 [ext_resource type="Texture2D" uid="uid://t0m8hep1y3n7" path="res://assets/frogs/jump.png" id="6_1jxqw"]
 [ext_resource type="Texture2D" uid="uid://dlxmafwgdxbh7" path="res://assets/frogs/walk.png" id="7_1jxqw"]
 
@@ -71,6 +72,14 @@ region = Rect2(24, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2hs0m"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_ur7pv")
+}],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pylmc")
@@ -144,7 +153,7 @@ material = SubResource("ShaderMaterial_sweqy")
 position = Vector2(0, -16)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_2hs0m")
-animation = &"walk"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="WallBounceTimer" type="Timer" parent="."]
