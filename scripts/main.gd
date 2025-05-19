@@ -29,8 +29,8 @@ var score: int = 0
 @onready var score_label: Label = $Camera2D/ScoreLabel
 
 @export var coin_scene: PackedScene = preload("res://scenes/coin.tscn")
-@export var coin_spawn_chance: float = 0.3  
-var coin_spawn_height_offset: float = -60.0  # height above platform
+@export var coin_spawn_chance: float = 0.3
+var coin_spawn_height_offset: float = -24.0
 
 # TODO: fix jittering. smooth camera on youtube?
 
@@ -53,7 +53,7 @@ func _ready() -> void:
 	for i in range(2):
 		spawn_next_platform()
 	
-	# Inicjalizacja DangerZone
+	# initialize danger zone
 	var screen_size_y := get_viewport().get_visible_rect().size.y
 	var initial_danger_zone_y := player.position.y + screen_size_y / 2 + 50
 	danger_zone.initialize(initial_danger_zone_y)
@@ -131,15 +131,18 @@ func spawn_next_platform() -> void:
 
 
 func spawn_coin_above_platform(platform: Platform) -> void:
-	var coin: Coin = coin_scene.instantiate() as Coin
-	 # Ustaw pozycję monety (środek platformy + offset w górę)
+	var coin: Coin = coin_scene.instantiate()
+	
+	var random_horizontal_offset := randf_range(
+		-platform.desired_size.x / 5.0,
+		platform.desired_size.x / 5.0,
+	)
 	coin.position = Vector2(
-		platform.position.x,
-		platform.position.y + coin_spawn_height_offset
-	)   
-	   # Dodaj monetę do sceny
+		platform.position.x + random_horizontal_offset,
+		platform.position.y + coin_spawn_height_offset,
+	)
+	
 	add_child(coin)
-	 # Podłącz sygnał (jeśli nie masz jeszcze połączenia w scenie)
 	coin.coin_collected.connect(_on_coin_collected)
 
 func _on_coin_collected(value: int) -> void:
@@ -153,7 +156,7 @@ func update_score_display() -> void:
 
 func animate_score() -> void:
 	var tween: Tween = create_tween()
-	tween.set_trans(Tween.TRANS_QUAD)  # Ustawienie płynnego przejścia
+	tween.set_trans(Tween.TRANS_QUAD)
 	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property(score_label, "scale", Vector2(1.2, 1.2), 0.1)
 	tween.tween_property(score_label, "scale", Vector2(1.0, 1.0), 0.1)
