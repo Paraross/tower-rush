@@ -3,22 +3,6 @@
 [ext_resource type="Script" uid="uid://dehir7gymuwpe" path="res://scripts/bat.gd" id="1_cnldk"]
 [ext_resource type="Texture2D" uid="uid://bewv2hd0p6fel" path="res://assets/extras/bat.png" id="1_uhqni"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cnldk"]
-atlas = ExtResource("1_uhqni")
-region = Rect2(0, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_48wkk"]
-atlas = ExtResource("1_uhqni")
-region = Rect2(32, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ss3tx"]
-atlas = ExtResource("1_uhqni")
-region = Rect2(64, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lv0ya"]
-atlas = ExtResource("1_uhqni")
-region = Rect2(96, 64, 32, 32)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_5fn3r"]
 atlas = ExtResource("1_uhqni")
 region = Rect2(0, 96, 32, 32)
@@ -35,25 +19,24 @@ region = Rect2(64, 96, 32, 32)
 atlas = ExtResource("1_uhqni")
 region = Rect2(96, 96, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_cnldk"]
+atlas = ExtResource("1_uhqni")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48wkk"]
+atlas = ExtResource("1_uhqni")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ss3tx"]
+atlas = ExtResource("1_uhqni")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv0ya"]
+atlas = ExtResource("1_uhqni")
+region = Rect2(96, 64, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_5fn3r"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cnldk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_48wkk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ss3tx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lv0ya")
-}],
-"loop": true,
-"name": &"default",
-"speed": 10.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5fn3r")
@@ -68,7 +51,24 @@ animations = [{
 "texture": SubResource("AtlasTexture_k0o7o")
 }],
 "loop": true,
-"name": &"side",
+"name": &"move",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cnldk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_48wkk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ss3tx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lv0ya")
+}],
+"loop": true,
+"name": &"stationary",
 "speed": 10.0
 }]
 
@@ -77,13 +77,14 @@ radius = 4.0
 
 [node name="Bat" type="Area2D"]
 z_index = 5
+collision_layer = 32
 script = ExtResource("1_cnldk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_5fn3r")
-autoplay = "default"
-frame_progress = 0.859791
+animation = &"stationary"
+autoplay = "stationary"
+offset = Vector2(-0.5, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_8qtcx")

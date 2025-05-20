@@ -179,23 +179,28 @@ func animate_score() -> void:
 func spawn_bat_near_platform(platform: Platform) -> void:
 	var bat: Bat = bat_scene.instantiate()
 	
-	 # Losowa pozycja X (z marginesem od krawędzi platformy)
 	var random_x := randf_range(
 		platform.position.x - platform.desired_size.x / 3,
 		platform.position.x + platform.desired_size.x / 3
 	)
-		# Losowa pozycja Y (w zakresie bat_spawn_height_range)
 	var random_y := platform.position.y + randf_range(
 		bat_spawn_height_range.x,
 		bat_spawn_height_range.y
 	) 
 	bat.position = Vector2(random_x, random_y)
-	 # Podpięcie sygnału
+	bat.set_bounds(left_wall.position.x, right_wall.position.x)
+	
+	var moving_bat_chance := 0.75
+	var speed := 0.0
+	if randf() < moving_bat_chance:
+		var random_speed_mult := randf_range(0.5, 1.5)
+		speed = 50.0 * difficulty_level * random_speed_mult
+	bat.set_speed(speed)
+	
 	bat.player_caught.connect(game_over)
 	add_child(bat)
 
-### Reason is currently only danger zone.
-### Later might include things like time running out.
+
 func game_over(reason: String) -> void:
 	exit()
 	player.sprite.animation = "dead"

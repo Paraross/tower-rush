@@ -55,6 +55,7 @@ move_right={
 2d_physics/layer_3="wall"
 2d_physics/layer_4="danger_zone"
 2d_physics/layer_5="coin"
+2d_physics/layer_6="bat"
 
 [rendering]
 
