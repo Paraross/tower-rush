@@ -2,6 +2,14 @@ extends Node
 
 const MAX_LEVEL: int = 3
 
+@export var coin_scene: PackedScene = preload("res://scenes/coin.tscn")
+@export var coin_spawn_chance: float = 0.3
+var coin_spawn_height_offset: float = -24.0
+
+@export var bat_scene: PackedScene = preload("res://scenes/bat.tscn")
+@export var bat_spawn_chance: float = 0.2
+var bat_spawn_height_range: Vector2 = Vector2(-150, -300)  # Zakres Y względem platformy
+
 var platform_scene: PackedScene = preload("res://scenes/platform.tscn")
 var platform_sprites: Array[Texture2D]
 
@@ -28,14 +36,6 @@ var score: int = 0
 @onready var danger_zone: DangerZone = $DangerZone
 @onready var score_label: Label = $Camera2D/ScoreLabel
 
-@export var coin_scene: PackedScene = preload("res://scenes/coin.tscn")
-@export var coin_spawn_chance: float = 0.3
-var coin_spawn_height_offset: float = -24.0
-
-@export var bat_scene: PackedScene = preload("res://scenes/bat.tscn")
-@export var bat_spawn_chance: float = 0.2  # 20% szansy na spawn nietoperza przy platformie
-var bat_spawn_height_range: Vector2 = Vector2(-150, -300)  # Zakres Y względem platformy
-
 # TODO: fix jittering. smooth camera on youtube?
 
 func _ready() -> void:
@@ -57,13 +57,12 @@ func _ready() -> void:
 	for i in range(2):
 		spawn_next_platform()
 	
-	_init_danger_zone()
-	
+	init_danger_zone()
 	
 	exit()
 
-func _init_danger_zone() -> void:
-		# initialize danger zone
+
+func init_danger_zone() -> void:
 	var screen_size_y := get_viewport().get_visible_rect().size.y
 	var initial_danger_zone_y := player.position.y + screen_size_y / 2 + 50
 	danger_zone.initialize(initial_danger_zone_y)
@@ -122,10 +121,8 @@ func spawn_next_platform() -> void:
 	
 	platforms.add_child(new_platform)
 	
-		# Losowe tworzenie nietoperzy
 	if randf() < bat_spawn_chance:
 		spawn_bat_near_platform(new_platform)
-	
 		
 	if randf() < coin_spawn_chance:
 		spawn_coin_above_platform(new_platform)
@@ -159,6 +156,7 @@ func spawn_coin_above_platform(platform: Platform) -> void:
 	add_child(coin)
 	coin.coin_collected.connect(_on_coin_collected)
 
+
 func _on_coin_collected(value: int) -> void:
 	score += value
 	update_score_display()
@@ -169,7 +167,7 @@ func update_score_display() -> void:
 	
 
 func animate_score() -> void:
-	var tween: Tween = create_tween()
+	var tween := create_tween()
 	tween.set_trans(Tween.TRANS_QUAD)
 	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property(score_label, "scale", Vector2(1.2, 1.2), 0.1)
