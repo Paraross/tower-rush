@@ -47,7 +47,6 @@ func _ready() -> void:
 	@warning_ignore("shadowed_global_identifier")
 	var floor: Platform = platforms.get_node("Floor")
 	initial_platform_pos = floor.position.y - platform_distance
-	
 	load_platform_sprites()
 	
 	for platform: Platform in platforms.get_children():

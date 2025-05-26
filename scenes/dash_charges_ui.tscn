@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuhopoqbttth7"]
+
+[ext_resource type="Script" uid="uid://bo84s3divrn1m" path="res://scripts/dash_charges_ui.gd" id="1_fnc8y"]
+
+[node name="DashChargesUI" type="CanvasLayer"]
+script = ExtResource("1_fnc8y")
+
+[node name="Charge1" type="ColorRect" parent="."]
+offset_right = 20.0
+offset_bottom = 40.0
+
+[node name="Charge2" type="ColorRect" parent="."]
+offset_left = 26.0
+offset_right = 46.0
+offset_bottom = 40.0
+
+[node name="Charge3" type="ColorRect" parent="."]
+offset_left = 52.0
+offset_right = 72.0
+offset_bottom = 40.0

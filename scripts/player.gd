@@ -16,12 +16,38 @@ var just_started_falling: bool = false
 @onready var wall_bounce_timer: Timer = $WallBounceTimer
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+@onready var dash_ui: DashChargesUI = preload("res://scenes/dash_charges_ui.tscn").instantiate()
+var dash_recharge_progress: float = 0.0
+
+@export var dash_charges_max: int = 3
+@export var dash_recharge_time: float = 5.0
+var dash_charges: int = dash_charges_max
+var dash_recharge_timer: float = 0.0
+var is_dashing: bool = false
+
+func _ready() -> void:
+	add_child(dash_ui)
+
 func _process(delta: float) -> void:
+	
+	if dash_charges < dash_charges_max:
+		dash_recharge_timer += delta
+		dash_recharge_progress = dash_recharge_timer / dash_recharge_time
+		dash_ui.update_charges(dash_charges, dash_recharge_progress)
+	  
+	if dash_recharge_timer >= dash_recharge_time:
+		dash_charges += 1
+		dash_recharge_timer = 0.0
+		dash_recharge_progress = 0.0
+		dash_ui.update_charges(dash_charges, 0.0)
+	else:
+		dash_ui.update_charges(dash_charges, 0.0)
+	
 	handle_horizontal_movement()
 	handle_gravity(delta)
 	handle_jumping()
+	handle_dashing()
 	handle_animations()
-	
 	handle_collisions()
 	
 	manage_state()
@@ -45,6 +71,16 @@ func handle_jumping() -> void:
 		just_jumped = true
 	else:
 		just_jumped = false
+
+func handle_dashing() -> void:
+	if Input.is_action_just_pressed("jump") and not is_on_floor() and dash_charges > 0:
+		dash_charges -= 1
+		is_dashing = true
+		target_velocity.y = -jump_impulse * 0.95  # Mniejszy impuls niż przy normalnym skoku
+	# Resetujemy timer, jeśli zużyliśmy ostatnią szarżę
+		if dash_charges == dash_charges_max - 1:
+			dash_recharge_timer = 0.0
+
 
 
 func can_jump() -> bool:

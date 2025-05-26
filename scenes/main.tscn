@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d0uw1sb6c1v64"]
+[gd_scene load_steps=14 format=3 uid="uid://d0uw1sb6c1v64"]
 
 [ext_resource type="Script" uid="uid://dnp4lmqy3urp1" path="res://scripts/main.gd" id="1_tefeu"]
 [ext_resource type="PackedScene" uid="uid://3e1x3vxmnc8h" path="res://scenes/background.tscn" id="2_o6xl0"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bkoadxayaeo0x" path="res://scenes/game_over_menu.tscn" id="8_tipki"]
 [ext_resource type="FontFile" uid="uid://8rcdjwvbjj5" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="9_85g3d"]
 [ext_resource type="PackedScene" uid="uid://bh348e0qnnql7" path="res://scenes/skin_select_menu.tscn" id="10_choun"]
+[ext_resource type="PackedScene" uid="uid://cuhopoqbttth7" path="res://scenes/dash_charges_ui.tscn" id="11_ya4ey"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1bvp3"]
 normal = Vector2(1, 0)
@@ -76,6 +77,9 @@ visible = false
 visible = false
 
 [node name="SkinSelectMenu" parent="." instance=ExtResource("10_choun")]
+visible = false
+
+[node name="DashChargesUI" parent="." instance=ExtResource("11_ya4ey")]
 visible = false
 
 [connection signal="player_caught" from="DangerZone" to="." method="game_over"]
