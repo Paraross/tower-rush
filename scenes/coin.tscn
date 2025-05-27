@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://8nwqg5rxqoq8"]
+[gd_scene load_steps=18 format=3 uid="uid://8nwqg5rxqoq8"]
 
 [ext_resource type="Script" uid="uid://bho55rxqph74r" path="res://scripts/coin.gd" id="1_i64fm"]
 [ext_resource type="Texture2D" uid="uid://cy6kcojwyckf4" path="res://assets/extras/coin.png" id="1_rwqht"]
+[ext_resource type="PackedScene" uid="uid://bgx27x8be4me4" path="res://scenes/coin_effect.tscn" id="3_11l1o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i64fm"]
 atlas = ExtResource("1_rwqht")
@@ -111,5 +112,10 @@ frame_progress = 0.594256
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ssuvv")
+
+[node name="CollectEffect" parent="." instance=ExtResource("3_11l1o")]
+visible = false
+autoplay = ""
+frame_progress = 0.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
