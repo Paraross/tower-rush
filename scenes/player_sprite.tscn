@@ -10,6 +10,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sweqy"]
 shader = ExtResource("1_gh6wc")
+shader_parameter/in_coin_rush = false
 shader_parameter/in_palette = ExtResource("2_51xot")
 shader_parameter/out_palette = ExtResource("2_51xot")
 

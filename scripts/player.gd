@@ -1,10 +1,14 @@
 class_name Player
 extends CharacterBody2D
 
-@export var horizontal_move_speed: float = 300.0
+@export var regular_move_speed: float = 300.0
+@export var coin_rush_move_speed: float = 500.0
+@export var regular_jump_impulse: float = 550.0
+@export var coin_rush_jump_impulse: float = 1000.0
 @export var gravity_acceleration: float = 1000.0
-@export var jump_impulse: float = 550.0
 
+var move_speed: float = regular_move_speed
+var jump_impulse: float = regular_jump_impulse
 var target_velocity: Vector2 = Vector2.ZERO
 var additional_velocity: Vector2 = Vector2.ZERO
 
@@ -61,7 +65,7 @@ func handle_horizontal_movement() -> void:
 		direction -= 1.0
 	if Input.is_action_pressed("move_right"):
 		direction += 1.0
-	target_velocity.x = direction * horizontal_move_speed
+	target_velocity.x = direction * move_speed
 
 
 func handle_jumping() -> void:
@@ -115,6 +119,24 @@ func set_self_velocity() -> void:
 	velocity = target_velocity
 	var ratio := wall_bounce_timer.time_left / wall_bounce_timer.wait_time
 	velocity.x = lerpf(target_velocity.x, additional_velocity.x, ratio)
+
+
+func set_coin_rush(in_coin_rush: bool) -> void:
+	var shader: ShaderMaterial = sprite.material
+	shader.set_shader_parameter("in_coin_rush", in_coin_rush)
+	
+	if in_coin_rush:
+		move_speed = coin_rush_move_speed
+		jump_impulse = coin_rush_jump_impulse
+	else:
+		move_speed = regular_move_speed
+		jump_impulse = regular_jump_impulse
+
+
+func die() -> void:
+	sprite.animation = "dead"
+	var shader: ShaderMaterial = sprite.material
+	shader.set_shader_parameter("in_coin_rush", false)
 
 
 func handle_animations() -> void:

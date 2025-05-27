@@ -1,5 +1,6 @@
 shader_type canvas_item;
 
+uniform bool in_coin_rush;
 /**
  *  [b]Note:[/b] Make sure the palettes are the same size.
  */
@@ -26,7 +27,16 @@ void fragment() {
 		vec4 out_color = texelFetch(out_palette, pos, LOD);
 		tmp_color += float(color == in_color) * out_color;
 	}
-	COLOR = tmp_color;
+	
+	vec3 coin_rush_effect;
+	if (in_coin_rush) {
+		coin_rush_effect = 0.5 + 0.5 * cos(TIME + UV.xyx + vec3(0.0, 2.0, 4.0));
+	} else {
+		coin_rush_effect = vec3(1.0, 1.0, 1.0);
+	}
+	vec4 coin_rush_color = vec4(coin_rush_effect, 1.0);
+	
+	COLOR = tmp_color * coin_rush_color;
 }
 
 //void light() {

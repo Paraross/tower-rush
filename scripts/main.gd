@@ -24,6 +24,10 @@ var initial_platform_pos: float
 
 var score: int = 0
 
+var in_coin_rush: bool = false
+var coin_rush_progress: float = 0.0
+@onready var coin_rush_timer: Timer = $CoinRushTimer
+
 @onready var player: Player = $Player
 @onready var camera: Camera2D = $Camera2D
 @onready var platforms: Node = $Platforms
@@ -157,6 +161,16 @@ func spawn_coin_above_platform(platform: Platform) -> void:
 func _on_coin_collected(value: int) -> void:
 	score += value
 	update_score_display()
+	
+	if in_coin_rush:
+		return
+	
+	coin_rush_progress += 1.0 / 3.0
+	coin_rush_progress = min(coin_rush_progress, 1.0)
+	if coin_rush_progress == 1.0:
+		in_coin_rush = true
+		player.set_coin_rush(true)
+		coin_rush_timer.start()
 
 
 func update_score_display() -> void:
@@ -198,7 +212,7 @@ func spawn_bat_near_platform(platform: Platform) -> void:
 
 func game_over(reason: String) -> void:
 	exit()
-	player.sprite.animation = "dead"
+	player.die()
 	game_over_menu.death_reason = reason.to_upper()
 	game_over_menu.points = score
 	game_over_menu.enter()
@@ -216,3 +230,8 @@ func exit() -> void:
 	set_process_unhandled_input(false)
 	player.set_process(false)
 	danger_zone.set_process(false)
+
+
+func _on_coin_rush_timer_timeout() -> void:
+	in_coin_rush = false
+	player.set_coin_rush(false)

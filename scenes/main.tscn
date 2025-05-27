@@ -81,8 +81,13 @@ visible = false
 [node name="SkinSelectMenu" parent="." instance=ExtResource("10_choun")]
 visible = false
 
+[node name="CoinRushTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
 [connection signal="player_caught" from="DangerZone" to="." method="game_over"]
 [connection signal="exited_to_game" from="PauseMenu" to="." method="enter"]
 [connection signal="exited_to_game" from="MainMenu" to="." method="enter"]
 [connection signal="exited_to_skin_select" from="MainMenu" to="SkinSelectMenu" method="enter"]
 [connection signal="exited_to_main_menu" from="SkinSelectMenu" to="MainMenu" method="enter"]
+[connection signal="timeout" from="CoinRushTimer" to="." method="_on_coin_rush_timer_timeout"]
