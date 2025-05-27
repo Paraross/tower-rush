@@ -18,7 +18,7 @@ func _on_body_entered(body: Node2D) -> void:
 	var tween := create_tween()
 	tween.set_trans(Tween.TRANS_QUAD)
 	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_property(sprite, "scale", Vector2(3.0, 3.0), 0.2)
+	tween.tween_property(sprite, "scale", Vector2(3.5, 3.5), 0.2)
 	tween.set_ease(Tween.EASE_IN)
 	tween.tween_property(sprite, "scale", Vector2(0.0, 0.0), 0.3)
 	
