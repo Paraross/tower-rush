@@ -17,7 +17,6 @@ var just_started_falling: bool = false
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 @onready var dash_ui: DashChargesUI = preload("res://scenes/dash_charges_ui.tscn").instantiate()
-var dash_recharge_progress: float = 0.0
 
 @export var dash_charges_max: int = 3
 @export var dash_recharge_time: float = 5.0
@@ -29,19 +28,14 @@ func _ready() -> void:
 	add_child(dash_ui)
 
 func _process(delta: float) -> void:
+	dash_recharge_timer += delta
+	dash_recharge_timer = clampf(dash_recharge_timer, 0.0, dash_recharge_time) 
 	
-	if dash_charges < dash_charges_max:
-		dash_recharge_timer += delta
-		dash_recharge_progress = dash_recharge_timer / dash_recharge_time
-		dash_ui.update_charges(dash_charges, dash_recharge_progress)
-	  
-	if dash_recharge_timer >= dash_recharge_time:
+	if dash_recharge_timer == dash_recharge_time and dash_charges != dash_charges_max:
 		dash_charges += 1
 		dash_recharge_timer = 0.0
-		dash_recharge_progress = 0.0
-		dash_ui.update_charges(dash_charges, 0.0)
-	else:
-		dash_ui.update_charges(dash_charges, 0.0)
+	
+	dash_ui.update_charges(dash_charges, dash_recharge_timer / dash_recharge_time)
 	
 	handle_horizontal_movement()
 	handle_gravity(delta)
