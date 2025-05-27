@@ -11,6 +11,7 @@ signal coin_collected(value: int)
 
 func _on_body_entered(body: Node2D) -> void:
 	assert(body is Player)
+	collision_mask = 0
 	coin_collected.emit(coin_value)
 	collect_effect.show()
 	collect_effect.play("default")
