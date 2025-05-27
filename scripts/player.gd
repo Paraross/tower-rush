@@ -16,7 +16,7 @@ var just_started_falling: bool = false
 @onready var wall_bounce_timer: Timer = $WallBounceTimer
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-@onready var dash_ui: DashChargesUI = preload("res://scenes/dash_charges_ui.tscn").instantiate()
+@onready var dash_ui: DashChargesUI = $DashChargesUI
 
 @export var dash_charges_max: int = 3
 @export var dash_recharge_time: float = 5.0
@@ -25,7 +25,7 @@ var dash_recharge_timer: float = 0.0
 var is_dashing: bool = false
 
 func _ready() -> void:
-	add_child(dash_ui)
+	pass
 
 func _process(delta: float) -> void:
 	dash_recharge_timer += delta

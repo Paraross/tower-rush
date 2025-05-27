@@ -40,6 +40,8 @@ position = Vector2(0, -100)
 [node name="Player" parent="." instance=ExtResource("3_tipki")]
 z_index = 5
 
+[node name="DashChargesUI" parent="Player" instance=ExtResource("11_ya4ey")]
+
 [node name="Platforms" type="Node" parent="."]
 
 [node name="Floor" parent="Platforms" instance=ExtResource("4_85g3d")]
@@ -77,9 +79,6 @@ visible = false
 visible = false
 
 [node name="SkinSelectMenu" parent="." instance=ExtResource("10_choun")]
-visible = false
-
-[node name="DashChargesUI" parent="." instance=ExtResource("11_ya4ey")]
 visible = false
 
 [connection signal="player_caught" from="DangerZone" to="." method="game_over"]
