@@ -1,5 +1,6 @@
 shader_type canvas_item;
 
+uniform bool in_coin_rush;
 uniform float progress = 0.0;
 
 void vertex() {
@@ -14,6 +15,13 @@ void fragment() {
 		COLOR = full_color;
 	} else {
 		COLOR = empty_color;
+	}
+	
+	bool uv_in_borders = true;// UV.x > 0.1 && UV.x < 0.9 && UV.y > 0.1 && UV.y < 0.9;
+	if (in_coin_rush && COLOR == vec4(1.0, 1.0, 1.0, 1.0)) {
+		vec3 coin_rush_effect = 0.5 + 0.5 * cos(TIME + UV.xyx + vec3(0.0, 2.0, 4.0));
+		vec4 coin_rush_color = vec4(coin_rush_effect, 1.0);
+		COLOR *= coin_rush_color;
 	}
 }
 

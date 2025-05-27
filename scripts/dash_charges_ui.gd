@@ -31,3 +31,9 @@ func update_charges(available: int, progress: float) -> void:
 			shader.set_shader_parameter("progress", progress)
 		else:
 			shader.set_shader_parameter("progress", 0.0)
+
+
+func set_coin_rush(coin_rush: bool) -> void:
+	for i in range(charges.size()):
+		var shader: ShaderMaterial = charges[i].material
+		shader.set_shader_parameter("in_coin_rush", coin_rush)

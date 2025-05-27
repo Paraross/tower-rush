@@ -28,11 +28,13 @@ var dash_charges: int = dash_charges_max
 var dash_recharge_timer: float = 0.0
 var is_dashing: bool = false
 
+var in_coin_rush: bool = false
+
 func _ready() -> void:
 	pass
 
 func _process(delta: float) -> void:
-	dash_recharge_timer += delta
+	dash_recharge_timer += delta if not in_coin_rush else delta * 2.5
 	dash_recharge_timer = clampf(dash_recharge_timer, 0.0, dash_recharge_time) 
 	
 	if dash_recharge_timer == dash_recharge_time and dash_charges != dash_charges_max:
@@ -121,13 +123,17 @@ func set_self_velocity() -> void:
 	velocity.x = lerpf(target_velocity.x, additional_velocity.x, ratio)
 
 
-func set_coin_rush(in_coin_rush: bool) -> void:
-	var shader: ShaderMaterial = sprite.material
-	shader.set_shader_parameter("in_coin_rush", in_coin_rush)
+func set_coin_rush(coin_rush: bool) -> void:
+	dash_ui.set_coin_rush(coin_rush)
 	
-	if in_coin_rush:
+	in_coin_rush = coin_rush
+	var shader: ShaderMaterial = sprite.material
+	shader.set_shader_parameter("in_coin_rush", coin_rush)
+	
+	if coin_rush:
 		move_speed = coin_rush_move_speed
 		jump_impulse = coin_rush_jump_impulse
+		dash_charges = dash_charges_max
 	else:
 		move_speed = regular_move_speed
 		jump_impulse = regular_jump_impulse
@@ -135,8 +141,7 @@ func set_coin_rush(in_coin_rush: bool) -> void:
 
 func die() -> void:
 	sprite.animation = "dead"
-	var shader: ShaderMaterial = sprite.material
-	shader.set_shader_parameter("in_coin_rush", false)
+	set_coin_rush(false)
 
 
 func handle_animations() -> void:

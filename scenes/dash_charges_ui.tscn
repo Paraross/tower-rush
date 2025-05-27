@@ -5,14 +5,17 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wbcsi"]
 shader = ExtResource("2_tydct")
+shader_parameter/in_coin_rush = false
 shader_parameter/progress = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tydct"]
 shader = ExtResource("2_tydct")
+shader_parameter/in_coin_rush = false
 shader_parameter/progress = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vpc84"]
 shader = ExtResource("2_tydct")
+shader_parameter/in_coin_rush = false
 shader_parameter/progress = 0.0
 
 [node name="DashChargesUI" type="CanvasLayer"]

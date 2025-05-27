@@ -234,4 +234,5 @@ func exit() -> void:
 
 func _on_coin_rush_timer_timeout() -> void:
 	in_coin_rush = false
+	coin_rush_progress = 0.0
 	player.set_coin_rush(false)

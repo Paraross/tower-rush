@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://sk8717hno8rx"]
+[gd_scene load_steps=5 format=3 uid="uid://sk8717hno8rx"]
 
 [ext_resource type="Script" uid="uid://da5lh02yir5lq" path="res://scripts/player.gd" id="1_onrkg"]
 [ext_resource type="PackedScene" uid="uid://gves3qniaiqa" path="res://scenes/player_sprite.tscn" id="2_g2els"]
+[ext_resource type="PackedScene" uid="uid://cuhopoqbttth7" path="res://scenes/dash_charges_ui.tscn" id="3_qhqgy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(32, 32)
@@ -23,5 +24,7 @@ frame_progress = 1.0
 [node name="WallBounceTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="DashChargesUI" parent="." instance=ExtResource("3_qhqgy")]
 
 [connection signal="timeout" from="WallBounceTimer" to="." method="_on_wall_bounce_timer_timeout"]
