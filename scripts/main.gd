@@ -8,7 +8,8 @@ var coin_spawn_height_offset: float = -24.0
 
 @export var bat_scene: PackedScene = preload("res://scenes/bat.tscn")
 @export var bat_spawn_chance: float = 0.2
-var bat_spawn_height_range: Vector2 = Vector2(-150, -300)  # Zakres Y względem platformy
+var bat_spawn_height_range: Vector2 = Vector2(-150, -300)
+@onready var bats: Node = $Bats
 
 var platform_scene: PackedScene = preload("res://scenes/platform.tscn")
 var platform_sprites: Array[Texture2D]
@@ -207,7 +208,7 @@ func spawn_bat_near_platform(platform: Platform) -> void:
 	bat.set_speed(speed)
 	
 	bat.player_caught.connect(game_over)
-	add_child(bat)
+	bats.add_child(bat)
 
 
 func game_over(reason: String) -> void:
@@ -223,6 +224,8 @@ func enter() -> void:
 	set_process_unhandled_input(true)
 	player.set_process(true)
 	danger_zone.set_process(true)
+	for bat: Bat in bats.get_children():
+		bat.set_process(true)
 
 
 func exit() -> void:
@@ -230,6 +233,8 @@ func exit() -> void:
 	set_process_unhandled_input(false)
 	player.set_process(false)
 	danger_zone.set_process(false)
+	for bat: Bat in bats.get_children():
+		bat.set_process(false)
 
 
 func _on_coin_rush_timer_timeout() -> void:

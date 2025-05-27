@@ -39,6 +39,8 @@ position = Vector2(0, -100)
 [node name="Player" parent="." instance=ExtResource("3_tipki")]
 z_index = 5
 
+[node name="Bats" type="Node" parent="."]
+
 [node name="Platforms" type="Node" parent="."]
 
 [node name="Floor" parent="Platforms" instance=ExtResource("4_85g3d")]
