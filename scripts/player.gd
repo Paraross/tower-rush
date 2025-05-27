@@ -113,9 +113,18 @@ func handle_collisions() -> void:
 
 
 func handle_wall_collision() -> void:
-	if not is_on_floor() and target_velocity.x != 0.0:
-		wall_bounce_timer.start()
+	if is_on_floor():
+		return
+	
+	wall_bounce_timer.start()
+	if target_velocity.x != 0.0:
 		additional_velocity.x = -target_velocity.x
+		return
+	
+	if position.x > 0.0:
+		additional_velocity.x = -1.0
+	else:
+		additional_velocity.x = 1.0
 
 
 func set_self_velocity() -> void:
