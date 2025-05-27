@@ -5,6 +5,7 @@ extends Area2D
 
 signal player_caught(reason: String)
 
+@export var enabled: bool = true
 @export var initial_speed: float = 100.0
 @export var max_speed: float = 250.0
 
@@ -15,11 +16,10 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	position.y -= current_speed * delta
+	if not enabled:
+		return
 	
-	# Opcjonalnie: stopniowo zwiększaj prędkość
-	# Możesz to zrobić w _process lub np. gdy gracz osiągnie nowy poziom trudności
-	# current_speed = min(current_speed + speed_increase_rate * delta, max_speed)
+	position.y -= current_speed * delta
 
 
 func _on_body_entered(body: Node2D) -> void:
