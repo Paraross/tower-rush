@@ -4,10 +4,12 @@ const MAX_LEVEL: int = 3
 
 @export var coin_scene: PackedScene = preload("res://scenes/coin.tscn")
 @export var coin_spawn_chance: float = 0.3
-var coin_spawn_height_offset: float = -24.0
-
 @export var bat_scene: PackedScene = preload("res://scenes/bat.tscn")
 @export var bat_spawn_chance: float = 0.2
+@export var coins_to_coin_rush: int = 3
+
+var coin_spawn_height_offset: float = -24.0
+
 var bat_spawn_height_range: Vector2 = Vector2(-150, -300)
 @onready var bats: Node = $Bats
 
@@ -166,7 +168,7 @@ func _on_coin_collected(value: int) -> void:
 	if in_coin_rush:
 		return
 	
-	coin_rush_progress += 1.0 / 3.0
+	coin_rush_progress += 1.0 / coins_to_coin_rush as float
 	coin_rush_progress = min(coin_rush_progress, 1.0)
 	if coin_rush_progress == 1.0:
 		in_coin_rush = true
@@ -232,6 +234,7 @@ func exit() -> void:
 	set_process(false)
 	set_process_unhandled_input(false)
 	player.set_process(false)
+	player.set_coin_rush(false)
 	danger_zone.set_process(false)
 	for bat: Bat in bats.get_children():
 		bat.set_process(false)
