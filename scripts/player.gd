@@ -2,9 +2,9 @@ class_name Player
 extends CharacterBody2D
 
 @export var regular_move_speed: float = 300.0
-@export var coin_rush_move_speed: float = 500.0
-@export var regular_jump_impulse: float = 550.0
-@export var coin_rush_jump_impulse: float = 1000.0
+@export var coin_rush_move_speed: float = 400.0
+@export var regular_jump_impulse: float = 575.0
+@export var coin_rush_jump_impulse: float = 800.0
 @export var gravity_acceleration: float = 1000.0
 
 var move_speed: float = regular_move_speed
