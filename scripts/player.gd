@@ -81,6 +81,7 @@ func handle_dashing() -> void:
 	if Input.is_action_just_pressed("jump") and not is_on_floor() and dash_charges > 0:
 		dash_charges -= 1
 		is_dashing = true
+		just_jumped = true
 		target_velocity.y = -jump_impulse * 0.95
 		if dash_charges == dash_charges_max - 1:
 			dash_recharge_timer = 0.0
