@@ -31,7 +31,7 @@ offset_top = -256.0
 offset_right = -260.0
 offset_bottom = -226.0
 theme_override_fonts/font = ExtResource("9_85g3d")
-theme_override_font_sizes/font_size = 29
+theme_override_font_sizes/font_size = 32
 text = "0"
 
 [node name="Background" parent="." instance=ExtResource("2_o6xl0")]
