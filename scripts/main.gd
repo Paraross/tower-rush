@@ -36,8 +36,6 @@ var score: int = 0
 @onready var danger_zone: DangerZone = $DangerZone
 @onready var score_label: Label = $Camera2D/ScoreLabel
 
-# TODO: fix jittering. smooth camera on youtube?
-
 func _ready() -> void:
 	reach_height = player.position.y - platform_distance
 	

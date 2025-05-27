@@ -34,6 +34,11 @@ func _process(delta: float) -> void:
 	if dash_recharge_timer == dash_recharge_time and dash_charges != dash_charges_max:
 		dash_charges += 1
 		dash_recharge_timer = 0.0
+		var tween := create_tween()
+		tween.set_trans(Tween.TRANS_QUAD)
+		tween.set_ease(Tween.EASE_OUT)
+		tween.tween_property(dash_ui, "scale", Vector2(1.005, 1.005), 0.1)
+		tween.tween_property(dash_ui, "scale", Vector2(1.0, 1.0), 0.1)
 	
 	dash_ui.update_charges(dash_charges, dash_recharge_timer / dash_recharge_time)
 	
@@ -70,11 +75,9 @@ func handle_dashing() -> void:
 	if Input.is_action_just_pressed("jump") and not is_on_floor() and dash_charges > 0:
 		dash_charges -= 1
 		is_dashing = true
-		target_velocity.y = -jump_impulse * 0.95  # Mniejszy impuls niż przy normalnym skoku
-	# Resetujemy timer, jeśli zużyliśmy ostatnią szarżę
+		target_velocity.y = -jump_impulse * 0.95
 		if dash_charges == dash_charges_max - 1:
 			dash_recharge_timer = 0.0
-
 
 
 func can_jump() -> bool:
